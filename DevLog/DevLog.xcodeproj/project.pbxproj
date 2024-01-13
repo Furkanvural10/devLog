@@ -12,6 +12,8 @@
 		0466997D2B4ECA070053C1BD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0466997C2B4ECA070053C1BD /* Assets.xcassets */; };
 		046699802B4ECA070053C1BD /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0466997F2B4ECA070053C1BD /* Preview Assets.xcassets */; };
 		046699882B4ED8970053C1BD /* ApplicationMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046699872B4ED8970053C1BD /* ApplicationMenu.swift */; };
+		04BC76B52B53299A00AE8593 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BC76B42B53299A00AE8593 /* AppDelegate.swift */; };
+		04BC76B72B532C9300AE8593 /* PopoverTaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BC76B62B532C9300AE8593 /* PopoverTaskView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +24,8 @@
 		0466997F2B4ECA070053C1BD /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		046699812B4ECA070053C1BD /* DevLog.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DevLog.entitlements; sourceTree = "<group>"; };
 		046699872B4ED8970053C1BD /* ApplicationMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationMenu.swift; sourceTree = "<group>"; };
+		04BC76B42B53299A00AE8593 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		04BC76B62B532C9300AE8593 /* PopoverTaskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopoverTaskView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +64,8 @@
 				046699812B4ECA070053C1BD /* DevLog.entitlements */,
 				0466997E2B4ECA070053C1BD /* Preview Content */,
 				046699872B4ED8970053C1BD /* ApplicationMenu.swift */,
+				04BC76B42B53299A00AE8593 /* AppDelegate.swift */,
+				04BC76B62B532C9300AE8593 /* PopoverTaskView.swift */,
 			);
 			path = DevLog;
 			sourceTree = "<group>";
@@ -142,7 +148,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04BC76B52B53299A00AE8593 /* AppDelegate.swift in Sources */,
 				0466997B2B4ECA060053C1BD /* ContentView.swift in Sources */,
+				04BC76B72B532C9300AE8593 /* PopoverTaskView.swift in Sources */,
 				046699882B4ED8970053C1BD /* ApplicationMenu.swift in Sources */,
 				046699792B4ECA060053C1BD /* DevLogApp.swift in Sources */,
 			);
