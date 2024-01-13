@@ -11,6 +11,11 @@ import SwiftUI
 class AppDelegate: NSObject, NSApplicationDelegate {
     
     var statusItem: NSStatusItem!
+    private lazy var contentView: NSView? = {
+        let view = (statusItem.value(forKey: "window") as? NSWindow)?.contentView
+        return view
+    }()
+    
     var popover = NSPopover()
     
     func applicationDidFinishLaunching(_ notification: Notification) {
@@ -25,9 +30,21 @@ extension AppDelegate {
     
     func setupMenuBar() {
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength) // 64
-        guard let menuButton = statusItem.button else { return }
-        menuButton.image = NSImage(named: "DevLog")
+        guard let contentView = self.contentView,
+              let menuButton = statusItem.button else { return }
         
+        let hostingView = NSHostingView(rootView: MenuBarDevLogView())
+        hostingView.translatesAutoresizingMaskIntoConstraints = false
+        contentView.addSubview(hostingView)
+        
+        NSLayoutConstraint.activate([
+            hostingView.topAnchor.constraint(equalTo: contentView.topAnchor),
+            hostingView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            hostingView.rightAnchor.constraint(equalTo: contentView.rightAnchor),
+            hostingView.leftAnchor.constraint(equalTo: contentView.leftAnchor),
+        ])
+        
+
         menuButton.action = #selector(menuButtonClicked)
         
     }
@@ -39,8 +56,12 @@ extension AppDelegate {
         }
         
         guard let menuButton = statusItem.button else { return }
+        let positionView = NSView(frame: menuButton.bounds)
+        positionView.identifier = NSUserInterfaceItemIdentifier(rawValue: "positionView")
+        menuButton.addSubview(positionView)
         
         popover.show(relativeTo: menuButton.bounds, of: menuButton, preferredEdge: .maxY)
+        menuButton.bounds = menuButton.bounds.offsetBy(dx: 0, dy: menuButton.bounds.height)
         popover.contentViewController?.view.window?.makeKey()
         
         
@@ -48,14 +69,25 @@ extension AppDelegate {
 }
 
 // MARK: - POPOVER
-extension AppDelegate {
+extension AppDelegate: NSPopoverDelegate {
     
     func setupPopover() {
         popover.behavior = .transient
         popover.animates = true
         popover.contentSize = .init(width: 240, height: 200)
-//        popover.contentViewController = NSViewController()
+        popover.contentViewController = NSViewController()
+        popover.contentViewController?.view = NSHostingView(
+            rootView: PopoverTaskView().frame(maxWidth: .infinity, maxHeight: .infinity).padding(/*@START_MENU_TOKEN@*/EdgeInsets()/*@END_MENU_TOKEN@*/)
+        )
         
+        popover.delegate = self
+    }
+    
+    func popoverDidClose(_ notification: Notification) {
+        let positionView = statusItem.button?.subviews.first {
+            $0.identifier == NSUserInterfaceItemIdentifier("positionView")
+        }
+        positionView?.removeFromSuperview()
     }
     
 }
