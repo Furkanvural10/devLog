@@ -9,7 +9,6 @@ import Foundation
 import SwiftUI
 
 class AppDelegate: NSObject, NSApplicationDelegate {
-    
     var statusItem: NSStatusItem!
     private lazy var contentView: NSView? = {
         let view = (statusItem.value(forKey: "window") as? NSWindow)?.contentView
@@ -40,11 +39,10 @@ extension AppDelegate {
         NSLayoutConstraint.activate([
             hostingView.topAnchor.constraint(equalTo: contentView.topAnchor),
             hostingView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-            hostingView.rightAnchor.constraint(equalTo: contentView.rightAnchor),
-            hostingView.leftAnchor.constraint(equalTo: contentView.leftAnchor),
+            hostingView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8),
+            hostingView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8),
         ])
         
-
         menuButton.action = #selector(menuButtonClicked)
         
     }
@@ -55,6 +53,7 @@ extension AppDelegate {
             return
         }
         
+        // MARK: - Showing Popover view
         guard let menuButton = statusItem.button else { return }
         let positionView = NSView(frame: menuButton.bounds)
         positionView.identifier = NSUserInterfaceItemIdentifier(rawValue: "positionView")
@@ -74,7 +73,7 @@ extension AppDelegate: NSPopoverDelegate {
     func setupPopover() {
         popover.behavior = .transient
         popover.animates = true
-        popover.contentSize = .init(width: 240, height: 200)
+        popover.contentSize = .init(width: 320, height: 250)
         popover.contentViewController = NSViewController()
         popover.contentViewController?.view = NSHostingView(
             rootView: PopoverTaskView().frame(maxWidth: .infinity, maxHeight: .infinity).padding(/*@START_MENU_TOKEN@*/EdgeInsets()/*@END_MENU_TOKEN@*/)
