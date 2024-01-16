@@ -8,66 +8,78 @@
 import SwiftUI
 
 struct PopoverTaskView: View {
-    @State var selectedItem = false
+    
+    @State var isSelected = false
+    @State private var selectedItem: Int?
     @State var addText = ""
     @State var itemList = ["Item 1", "Item 2", "Item 3", "Item 4", "Item 5","Item 1", "Item 2", "Item 3", "Item 4", "Item 5"]
-
+    
     
     var body: some View {
         VStack(spacing: 5) {
             Text("14 Ocak Pazartesi")
                 .font(.headline)
                 .padding()
-                
+            
             HStack(spacing: 10) {
                 ZStack {
                     Rectangle()
-                        .fill(selectedItem == true ? .black.opacity(0.15) : .black.opacity(0))
+                        .fill(selectedItem == 0 ? .white.opacity(0.1) : Color.clear)
+                    
                         .frame(width: 100, height: 35)
                         .cornerRadius(10)
                     HStack {
+                        Text("Features")
                         Image(systemName: "list.star")
                             .foregroundStyle(.green)
-                        Text("Features")
+                    }
+                    .onTapGesture {
+                        self.selectedItem = 0
+                        
                     }
                 }
                 ZStack {
                     Rectangle()
-                        .fill(selectedItem == true ? .black.opacity(0.15) : .black.opacity(0))
+                        .fill(selectedItem == 1 ? .white.opacity(0.1) : Color.clear)
                         .frame(width: 100, height: 35)
                         .cornerRadius(10)
                     HStack {
+                        Text("Bugs")
                         Image(systemName: "exclamationmark.octagon.fill")
                             .foregroundStyle(.red)
-                        Text("Bugs")
+                        
                     }
                 }
                 .onTapGesture {
                     print("Tıklandı")
-                    self.selectedItem = !selectedItem
+                    self.selectedItem = 1
                 }
                 
                 ZStack {
                     Rectangle()
-                        .fill(selectedItem == true ? .black.opacity(0.15) : .black.opacity(0))
+                        .fill(selectedItem == 2 ? .white.opacity(0.1) : Color.clear)
                         .frame(width: 100, height: 35)
                         .cornerRadius(10)
                     HStack {
+                        Text("Daily")
                         Image(systemName: "circle.hexagongrid")
                             .foregroundStyle(.orange)
-                        Text("Daily")
+                        
                     }
                 }
+                .onTapGesture {
+                    print("Bugs Tıklandı")
+                    self.selectedItem = 2
+                }
             }
-//            .padding()
             
-            Divider()
             HStack {
-                TextField("New Task", text: $addText) { text in
+                TextField("New Task", text: .constant("")) { text in
                     print(addText)
                 }
-                .clipShape(RoundedRectangle(cornerRadius: 5))
-                .padding(5)
+                .clipShape(RoundedRectangle(cornerRadius: 8))
+                .padding(.horizontal, 10)
+                
                 
                 
                 Button {
@@ -79,20 +91,29 @@ struct PopoverTaskView: View {
                 .padding(.trailing, 10)
                 .foregroundStyle(.red)
                 .buttonStyle(.bordered)
-
+                
             }
+            .padding(8)
             List {
                 ForEach(itemList, id: \.self) { item in
                     HStack {
+                        Toggle("", isOn: $isSelected)
+                            .toggleStyle(.automatic)
                         ZStack {
                             Rectangle()
                                 .frame(height: 40)
                                 .foregroundStyle(.gray.opacity(0.1))
                                 .clipShape(RoundedRectangle(cornerRadius: 5))
+                            Image(systemName: "multiply.circle")
+                                .foregroundColor(.white.opacity(0.3))
+                                .padding(4)
+                                .clipShape(Circle())
+                                .offset(x: 125, y: -17)
                             Text(item)
                         }
-                        Image(systemName: "multiply.circle")
-                            .foregroundStyle(.gray.opacity(0.5))
+                        Rectangle()
+                            .frame(width: 10, height: 10)
+                            .hidden()
                     }
                 }
             }
