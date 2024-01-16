@@ -10,7 +10,7 @@ import SwiftUI
 struct PopoverTaskView: View {
     @State var selectedItem = false
     @State var addText = ""
-    let itemList = ["Item 1", "Item 2", "Item 3", "Item 4", "Item 5","Item 1", "Item 2", "Item 3", "Item 4", "Item 5"]
+    @State var itemList = ["Item 1", "Item 2", "Item 3", "Item 4", "Item 5","Item 1", "Item 2", "Item 3", "Item 4", "Item 5"]
 
     
     var body: some View {
@@ -63,27 +63,40 @@ struct PopoverTaskView: View {
             
             Divider()
             HStack {
-                TextField("Add", text: $addText) { text in
+                TextField("New Task", text: $addText) { text in
                     print(addText)
                 }
                 .clipShape(RoundedRectangle(cornerRadius: 5))
                 .padding(5)
-                Button("Add") {
-                    
+                
+                
+                Button {
+                    print("Clicked")
+                    self.itemList.insert("New elemen", at: 0)
+                } label: {
+                    Text("Add")
                 }
+                .padding(.trailing, 10)
+                .foregroundStyle(.red)
+                .buttonStyle(.bordered)
+
             }
             List {
                 ForEach(itemList, id: \.self) { item in
-                    ZStack {
-                        Rectangle()
-                            .frame(width: .infinity, height: 40)
-                            .foregroundStyle(.black.opacity(0.3))
-                            .clipShape(RoundedRectangle(cornerRadius: 5))
-                        Text(item)
+                    HStack {
+                        ZStack {
+                            Rectangle()
+                                .frame(height: 40)
+                                .foregroundStyle(.gray.opacity(0.1))
+                                .clipShape(RoundedRectangle(cornerRadius: 5))
+                            Text(item)
+                        }
+                        Image(systemName: "multiply.circle")
+                            .foregroundStyle(.gray.opacity(0.5))
                     }
                 }
             }
-            .scrollIndicators(.hidden)
+            .scrollIndicators(.never)
             
         }
         
