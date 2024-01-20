@@ -10,10 +10,17 @@ import SwiftUI
 struct PopoverTaskView: View {
     
     @State var isSelected = false
+    @State private var isCompleted = false
+
     @State private var selectedItem: Int = 0
     @State var addText = ""
-    @State var itemList = ["Item 1", "Item 2", "Item 3", "Item 4", "Item 5","Item 1", "Item 2", "Item 3", "Item 4", "Item 5"]
+    @State var featureItemList = ["Feature Item 1", "Feature Item 2", "Feature Item 3", "Feature Item 4", "Feature Item 5"]
+    @State var bugItemList = ["Bug Item 1", "Bug Item 2", "Bug Item 3", "Bug Item 4", "Bug Item 5"]
+    @State var dailyItemList = ["Daily Item 1", "Daily Item 2", "Daily Item 3", "Daily Item 4", "Daily Item 5"]
     
+    @State var showingList: [String] = []
+    @State private var hoveredItem: Int = 0
+
     
     var body: some View {
         VStack(spacing: 5) {
@@ -25,7 +32,7 @@ struct PopoverTaskView: View {
                 ZStack {
                     Rectangle()
                         .fill(selectedItem == 0 ? .white.opacity(0.1) : Color.clear)
-                    
+                        .background(hoveredItem == 0 ? .white.opacity(0.05): Color.clear)
                         .frame(width: 100, height: 35)
                         .cornerRadius(10)
                     HStack {
@@ -35,14 +42,24 @@ struct PopoverTaskView: View {
                         Text("Features")
                             .foregroundStyle(selectedItem == 0 ? .white : .white.opacity(0.5))
                     }
-                    .onTapGesture {
-                        self.selectedItem = 0
-                        
+                }
+                .onHover(perform: { hovering in
+                    switch hovering {
+                    case true:
+                        self.hoveredItem = 0
+                    case false:
+                        self.hoveredItem = selectedItem
                     }
+                })
+                .onTapGesture {
+                    self.selectedItem = 0
+                    self.hoveredItem = 0
+                    showingList = featureItemList
                 }
                 ZStack {
                     Rectangle()
                         .fill(selectedItem == 1 ? .white.opacity(0.1) : Color.clear)
+                        .background(hoveredItem == 1 ? .white.opacity(0.05): Color.clear)
                         .frame(width: 100, height: 35)
                         .cornerRadius(10)
                     HStack {
@@ -54,14 +71,25 @@ struct PopoverTaskView: View {
                         
                     }
                 }
+                .onHover(perform: { hovering in
+                    switch hovering {
+                    case true:
+                        hoveredItem = 1
+                    case false:
+                        hoveredItem = selectedItem
+                    }
+                })
                 .onTapGesture {
                     print("Tıklandı")
                     self.selectedItem = 1
+                    self.hoveredItem = 1
+                    showingList = bugItemList
                 }
                 
                 ZStack {
                     Rectangle()
                         .fill(selectedItem == 2 ? .white.opacity(0.1) : Color.clear)
+                        .background(hoveredItem == 2 ? .white.opacity(0.05): Color.clear)
                         .frame(width: 100, height: 35)
                         .cornerRadius(10)
                     HStack {
@@ -72,13 +100,21 @@ struct PopoverTaskView: View {
                         
                     }
                 }
+                .onHover(perform: { hovering in
+                    switch hovering {
+                    case true:
+                        hoveredItem = 2
+                    case false:
+                        hoveredItem = selectedItem
+                    }
+                })
                 .onTapGesture {
                     print("Bugs Tıklandı")
                     self.selectedItem = 2
+                    self.hoveredItem = 2
+                    showingList = dailyItemList
                 }
             }
-            .background(.white.opacity(0.05))
-            .clipShape(RoundedRectangle(cornerRadius: 10))
         }
         
         
@@ -89,24 +125,33 @@ struct PopoverTaskView: View {
             .clipShape(RoundedRectangle(cornerRadius: 8))
             .padding(.horizontal, 10)
             
-            Button {
-                print("Clicked")
-                self.itemList.insert("New elemen", at: 0)
-            } label: {
-                Text("Add")
-            }
-            .padding(.trailing, 10)
-            .foregroundStyle(.red)
-            .buttonStyle(.bordered)
+            Image(systemName: "plus")
+                .padding(.trailing, 8)
+                .onTapGesture {
+                    // TODO: (Add item to relevant list
+                }
+            
+            
+            
+            
+//            Button {
+//                print("Clicked")
+//                self.itemList.insert("New elemen", at: 0)
+//            } label: {
+//                Text("Add")
+//            }
+//            .padding(.trailing, 10)
+//            .foregroundStyle(.red)
+//            .buttonStyle(.bordered)
             
         }
         .padding(8)
         
         
         List {
-            ForEach(itemList, id: \.self) { item in
+            ForEach(showingList, id: \.self) { item in
                 HStack {
-                    Toggle("", isOn: $isSelected)
+                    Toggle("", isOn: $isCompleted)
                         .toggleStyle(.automatic)
                     ZStack {
                         Rectangle()
@@ -122,6 +167,7 @@ struct PopoverTaskView: View {
                                 print("Clicked text delete")
                             }
                         Text(item)
+                            .strikethrough(isCompleted, color: .gray)
                     }
                     Rectangle()
                         .frame(width: 5, height: 5)
