@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+import Firebase
 
 class AppDelegate: NSObject, NSApplicationDelegate {
     var statusItem: NSStatusItem!
@@ -18,6 +19,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     var popover = NSPopover()
     
     func applicationDidFinishLaunching(_ notification: Notification) {
+        FirebaseApp.configure()
         setupMenuBar()
         setupPopover()
     }

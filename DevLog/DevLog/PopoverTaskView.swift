@@ -11,18 +11,21 @@ struct PopoverTaskView: View {
     
     @State var isSelected = false
     @State private var isCompleted = false
-
+    
     @State private var selectedItem: Int = 0
-    @State var addText = ""
+    @State private var text: String = ""
     @State var featureItemList = ["Feature Item 1", "Feature Item 2", "Feature Item 3", "Feature Item 4", "Feature Item 5"]
     @State var bugItemList = ["Bug Item 1", "Bug Item 2", "Bug Item 3", "Bug Item 4", "Bug Item 5"]
     @State var dailyItemList = ["Daily Item 1", "Daily Item 2", "Daily Item 3", "Daily Item 4", "Daily Item 5"]
     
     @State var showingList: [String] = []
     @State private var hoveredItem: Int = 0
-
+    @FocusState private var focused: Bool
+    
+    
     
     var body: some View {
+        
         VStack(spacing: 5) {
             Text("14 Ocak Pazartesi")
                 .font(.headline)
@@ -119,11 +122,12 @@ struct PopoverTaskView: View {
         
         
         HStack {
-            TextField("New Task", text: $addText) { text in
-                print(addText)
+            TextField("New Task", text: $text) { text in
+                print($text)
             }
             .clipShape(RoundedRectangle(cornerRadius: 8))
             .padding(.horizontal, 10)
+            
             
             Image(systemName: "plus")
                 .padding(.trailing, 8)
@@ -134,49 +138,66 @@ struct PopoverTaskView: View {
             
             
             
-//            Button {
-//                print("Clicked")
-//                self.itemList.insert("New elemen", at: 0)
-//            } label: {
-//                Text("Add")
-//            }
-//            .padding(.trailing, 10)
-//            .foregroundStyle(.red)
-//            .buttonStyle(.bordered)
+            //            Button {
+            //                print("Clicked")
+            //                self.itemList.insert("New elemen", at: 0)
+            //            } label: {
+            //                Text("Add")
+            //            }
+            //            .padding(.trailing, 10)
+            //            .foregroundStyle(.red)
+            //            .buttonStyle(.bordered)
             
         }
         .padding(8)
         
+        showingList.isEmpty ?
+        AnyView(
+            
+            
+            HStack(spacing: 5) {
+                Text("Task Eklenmedi")
+                    .foregroundStyle(.white.opacity(0.5))
+                    .font(.system(size: 18))
+                
+                Image(systemName: "exclamationmark.circle")
+                    .foregroundStyle(.white.opacity(0.5))
+                    .font(.system(size: 15))
+            }.padding(.vertical, 118)
+        )
         
-        List {
-            ForEach(showingList, id: \.self) { item in
-                HStack {
-                    Toggle("", isOn: $isCompleted)
-                        .toggleStyle(.automatic)
-                    ZStack {
+        : AnyView(
+            List {
+                ForEach(showingList, id: \.self) { item in
+                    HStack {
+                        Toggle("", isOn: $isCompleted)
+                            .toggleStyle(.automatic)
+                        ZStack {
+                            Rectangle()
+                                .frame(height: 40)
+                                .foregroundStyle(.gray.opacity(0.1))
+                                .clipShape(RoundedRectangle(cornerRadius: 5))
+                            Image(systemName: "multiply.circle")
+                                .foregroundColor(.white.opacity(0.3))
+                                .padding(4)
+                                .clipShape(Circle())
+                                .offset(x: 125, y: -17)
+                                .onTapGesture {
+                                    print("Clicked text delete")
+                                }
+                            Text(item)
+                                .strikethrough(isCompleted, color: .gray)
+                        }
                         Rectangle()
-                            .frame(height: 40)
-                            .foregroundStyle(.gray.opacity(0.1))
-                            .clipShape(RoundedRectangle(cornerRadius: 5))
-                        Image(systemName: "multiply.circle")
-                            .foregroundColor(.white.opacity(0.3))
-                            .padding(4)
-                            .clipShape(Circle())
-                            .offset(x: 125, y: -17)
-                            .onTapGesture {
-                                print("Clicked text delete")
-                            }
-                        Text(item)
-                            .strikethrough(isCompleted, color: .gray)
+                            .frame(width: 5, height: 5)
+                            .hidden()
                     }
-                    Rectangle()
-                        .frame(width: 5, height: 5)
-                        .hidden()
                 }
             }
-        }
-        .scrollIndicators(.never)
-        .clipShape(RoundedRectangle(cornerRadius: 10))
+                .scrollIndicators(.never)
+                .clipShape(RoundedRectangle(cornerRadius: 10))
+        )
+        
     }
 }
 
