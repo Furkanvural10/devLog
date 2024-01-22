@@ -7,7 +7,7 @@
 
 import Foundation
 import SwiftUI
-import Firebase
+
 
 class AppDelegate: NSObject, NSApplicationDelegate {
     var statusItem: NSStatusItem!
@@ -19,7 +19,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     var popover = NSPopover()
     
     func applicationDidFinishLaunching(_ notification: Notification) {
-        FirebaseApp.configure()
         setupMenuBar()
         setupPopover()
     }
@@ -28,6 +27,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 // MARK: - Menu Bar
 
 extension AppDelegate {
+    
+    
+    
     
     func setupMenuBar() {
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength) // 64

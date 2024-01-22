@@ -14,6 +14,8 @@ struct PopoverTaskView: View {
     
     @State private var selectedItem: Int = 0
     @State private var text: String = ""
+    
+// MARK: - Mock List Data
     @State var featureItemList = ["Feature Item 1", "Feature Item 2", "Feature Item 3", "Feature Item 4", "Feature Item 5"]
     @State var bugItemList = ["Bug Item 1", "Bug Item 2", "Bug Item 3", "Bug Item 4", "Bug Item 5"]
     @State var dailyItemList = ["Daily Item 1", "Daily Item 2", "Daily Item 3", "Daily Item 4", "Daily Item 5"]
@@ -125,28 +127,42 @@ struct PopoverTaskView: View {
             TextField("New Task", text: $text) { text in
                 print($text)
             }
+            .focused($focused)
             .clipShape(RoundedRectangle(cornerRadius: 8))
             .padding(.horizontal, 10)
-            
-            
-            Image(systemName: "plus")
-                .padding(.trailing, 8)
-                .onTapGesture {
-                    // TODO: (Add item to relevant list
+            .onAppear {
+                DispatchQueue.main.asyncAfter(deadline: .now()) {
+                    self.focused = false
                 }
+            }
+
             
+            ZStack {
+                Rectangle()
+                    .frame(width: 20, height: 20)
+                    .foregroundStyle( hoveredItem == 3 ? .white.opacity(0.1) : .clear)
+                    .clipShape(RoundedRectangle(cornerRadius: 5))
+                    .padding(.trailing, 8)
+                
+                Image(systemName: "plus")
+                    .padding(.trailing, 8)
+                    .onTapGesture {
+                        // TODO: (Add item to relevant list
+                        DispatchQueue.main.async {
+                            showingList.insert("New value", at: 0)
+                        }
+                    }
+            }
+            .onHover { hovering in
+                switch hovering {
+                case true:
+                    self.hoveredItem = 3
+                case false:
+                    self.hoveredItem = selectedItem
+                }
+                
+            }
             
-            
-            
-            //            Button {
-            //                print("Clicked")
-            //                self.itemList.insert("New elemen", at: 0)
-            //            } label: {
-            //                Text("Add")
-            //            }
-            //            .padding(.trailing, 10)
-            //            .foregroundStyle(.red)
-            //            .buttonStyle(.bordered)
             
         }
         .padding(8)
