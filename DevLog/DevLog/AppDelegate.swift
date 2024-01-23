@@ -7,6 +7,8 @@
 
 import Foundation
 import SwiftUI
+import Firebase
+import FirebaseAuth
 
 
 class AppDelegate: NSObject, NSApplicationDelegate {
@@ -19,8 +21,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     var popover = NSPopover()
     
     func applicationDidFinishLaunching(_ notification: Notification) {
+        FirebaseApp.configure()
         setupMenuBar()
         setupPopover()
+        createUser()
     }
 }
 
@@ -29,7 +33,31 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 extension AppDelegate {
     
     
-    
+    func createUser() {
+        
+        let currentUser = Auth.auth().currentUser
+        guard currentUser == nil else {
+            print("App has user")
+            return
+        }
+        
+        Auth.auth().signInAnonymously { result, error in
+            guard error == nil else {
+                print("Crate error occurs \(error?.localizedDescription)")
+                return
+            }
+            
+            guard let result else {
+                print("Result error occurs")
+                return
+            }
+            
+            let user = result.user.uid
+            print("User created successfully : \(user) ")
+            
+        }
+    }
+        
     
     func setupMenuBar() {
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength) // 64
