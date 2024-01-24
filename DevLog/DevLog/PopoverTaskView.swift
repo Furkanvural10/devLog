@@ -22,6 +22,8 @@ struct PopoverTaskView: View {
     
     @State var showingList: [String] = []
     @State private var hoveredItem: Int = 0
+    @State var title: String = ""
+    
     @FocusState private var focused: Bool
     
     
@@ -29,9 +31,18 @@ struct PopoverTaskView: View {
     var body: some View {
         
         VStack(spacing: 5) {
-            Text("14 Ocak Pazartesi")
+            Text(title)
                 .font(.headline)
                 .padding()
+                .onAppear {
+                    let today = Date()
+                    let formatter = DateFormatter()
+                    
+                    formatter.dateFormat = "EEEE, MMM d"
+                    formatter.locale = Locale(identifier: "tr_TR")
+                    let dateString = formatter.string(from: today)
+                    title = dateString
+                }
             
             HStack(spacing: 10) {
                 ZStack {
@@ -217,6 +228,6 @@ struct PopoverTaskView: View {
     }
 }
 
-#Preview {
-    PopoverTaskView()
-}
+//#Preview {
+//    PopoverTaskView()
+//}

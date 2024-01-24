@@ -91,6 +91,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		045F98892B614D880072C0FE /* Service */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
+		045F988A2B614D920072C0FE /* Support */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Support;
+			sourceTree = "<group>";
+		};
 		0466996C2B4ECA060053C1BD = {
 			isa = PBXGroup;
 			children = (
@@ -110,6 +124,8 @@
 		046699772B4ECA060053C1BD /* DevLog */ = {
 			isa = PBXGroup;
 			children = (
+				045F988A2B614D920072C0FE /* Support */,
+				045F98892B614D880072C0FE /* Service */,
 				046699782B4ECA060053C1BD /* DevLogApp.swift */,
 				0466997A2B4ECA060053C1BD /* ContentView.swift */,
 				04BC76B62B532C9300AE8593 /* PopoverTaskView.swift */,
