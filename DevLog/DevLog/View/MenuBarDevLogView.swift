@@ -10,9 +10,6 @@ import SwiftUI
 struct MenuBarDevLogView: View {
     var body: some View {
             Image("DevLog")
-            .onAppear {
-                print("Bir kere gözüktü")
-            }
     }
 }
 

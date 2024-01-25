@@ -110,12 +110,6 @@ extension AppDelegate: NSPopoverDelegate {
         popover.contentViewController?.view = NSHostingView(
             rootView: PopoverTaskView().frame(maxWidth: .infinity, maxHeight: .infinity).padding(/*@START_MENU_TOKEN@*/EdgeInsets()/*@END_MENU_TOKEN@*/)
         )
-        
-//        popover.contentViewController?.view = NSHostingView(
-//            rootView: PopoverTaskView().frame(maxWidth: .infinity, maxHeight: .infinity).padding(/*@START_MENU_TOKEN@*/EdgeInsets()/*@END_MENU_TOKEN@*/).background(Color("CustomColor"))
-//        )
-        
-        
         popover.delegate = self
     }
     

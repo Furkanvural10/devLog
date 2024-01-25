@@ -35,9 +35,9 @@ struct PopoverTaskView: View {
                 .font(.headline)
                 .padding()
                 .onAppear {
+                    // Move VM ***
                     let today = Date()
                     let formatter = DateFormatter()
-                    
                     formatter.dateFormat = "EEEE, MMM d"
                     formatter.locale = Locale(identifier: "tr_TR")
                     let dateString = formatter.string(from: today)
@@ -159,9 +159,10 @@ struct PopoverTaskView: View {
                     .padding(.trailing, 8)
                     .onTapGesture {
                         // TODO: (Add item to relevant list
-                        DispatchQueue.main.async {
-                            showingList.insert("New value", at: 0)
-                        }
+//                        DispatchQueue.main.async {
+//                            showingList.insert("New value", at: 0)
+//                        }
+                        print(text)
                     }
             }
             .onHover { hovering in
