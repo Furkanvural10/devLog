@@ -1,11 +1,5 @@
-//
-//  PopoverTaskView.swift
-//  DevLog
-//
-//  Created by furkan vural on 13.01.2024.
-//
-
 import SwiftUI
+import FirebaseFirestore
 
 struct PopoverTaskView: View {
     
@@ -42,6 +36,26 @@ struct PopoverTaskView: View {
                     formatter.locale = Locale(identifier: "tr_TR")
                     let dateString = formatter.string(from: today)
                     title = dateString
+                    
+                    let database = Firestore.firestore()
+                    database.collection("daily").getDocuments { snapshot, error in
+                        guard error == nil else {
+                            print("Error getting documents: \(error!)")
+                            return
+                        }
+
+                        dailyItemList = snapshot?.documents.compactMap { document in
+                            do {
+                                let item = try document.data(as: DailyTask.self)
+                                return item
+                            } catch {
+                                print("Error decoding document: \(error)")
+                                return nil
+                            }
+                        } as? [String] ?? []
+                    }
+                    
+                    
                 }
             
             HStack(spacing: 10) {
