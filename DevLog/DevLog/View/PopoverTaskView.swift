@@ -47,7 +47,8 @@ struct PopoverTaskView: View {
                         dailyItemList = snapshot?.documents.compactMap { document in
                             do {
                                 let item = try document.data(as: DailyTask.self)
-                                return item
+                                print(item.title)
+                                return item.title
                             } catch {
                                 print("Error decoding document: \(error)")
                                 return nil
