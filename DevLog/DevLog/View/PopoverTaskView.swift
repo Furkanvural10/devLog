@@ -36,28 +36,7 @@ struct PopoverTaskView: View {
                     formatter.locale = Locale(identifier: "tr_TR")
                     let dateString = formatter.string(from: today)
                     title = dateString
-                    
-                    let database = Firestore.firestore()
-                    database.collection("daily").getDocuments { snapshot, error in
-                        guard error == nil else {
-                            print("Error getting documents: \(error!)")
-                            return
-                        }
-
-                        dailyItemList = snapshot?.documents.compactMap { document in
-                            do {
-                                let item = try document.data(as: DailyTask.self)
-                                print(item.title)
-                                return item.title
-                            } catch {
-                                print("Error decoding document: \(error)")
-                                return nil
-                            }
-                        } as? [String] ?? []
-                    }
-                    
-                    
-                }
+        }
             
             HStack(spacing: 10) {
                 ZStack {
