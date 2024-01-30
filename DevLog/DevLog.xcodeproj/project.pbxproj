@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		042DCA452B698F9B00B6F57A /* PopoverViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042DCA442B698F9B00B6F57A /* PopoverViewModel.swift */; };
 		045F98D92B644BC50072C0FE /* DailyTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045F98D82B644BC50072C0FE /* DailyTask.swift */; };
 		045F98DB2B65A0130072C0FE /* FeatureTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045F98DA2B65A0130072C0FE /* FeatureTask.swift */; };
 		045F98DD2B65A01A0072C0FE /* BugTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045F98DC2B65A01A0072C0FE /* BugTask.swift */; };
@@ -44,6 +45,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		042DCA442B698F9B00B6F57A /* PopoverViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopoverViewModel.swift; sourceTree = "<group>"; };
 		045F98D82B644BC50072C0FE /* DailyTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyTask.swift; sourceTree = "<group>"; };
 		045F98DA2B65A0130072C0FE /* FeatureTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureTask.swift; sourceTree = "<group>"; };
 		045F98DC2B65A01A0072C0FE /* BugTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BugTask.swift; sourceTree = "<group>"; };
@@ -112,6 +114,7 @@
 		045F98AF2B62FB920072C0FE /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				042DCA442B698F9B00B6F57A /* PopoverViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -283,6 +286,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				042DCA452B698F9B00B6F57A /* PopoverViewModel.swift in Sources */,
 				045F98DD2B65A01A0072C0FE /* BugTask.swift in Sources */,
 				04BC76B52B53299A00AE8593 /* AppDelegate.swift in Sources */,
 				045F98DB2B65A0130072C0FE /* FeatureTask.swift in Sources */,
