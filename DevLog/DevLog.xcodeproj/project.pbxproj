@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		042DCA452B698F9B00B6F57A /* PopoverViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042DCA442B698F9B00B6F57A /* PopoverViewModel.swift */; };
+		042DCA4F2B6ADCDA00B6F57A /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042DCA4E2B6ADCDA00B6F57A /* FirebaseManager.swift */; };
+		042DCA512B6ADD1D00B6F57A /* FirebaseHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042DCA502B6ADD1D00B6F57A /* FirebaseHelper.swift */; };
+		042DCA532B6ADD4C00B6F57A /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042DCA522B6ADD4C00B6F57A /* User.swift */; };
 		045F98D92B644BC50072C0FE /* DailyTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045F98D82B644BC50072C0FE /* DailyTask.swift */; };
 		045F98DB2B65A0130072C0FE /* FeatureTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045F98DA2B65A0130072C0FE /* FeatureTask.swift */; };
 		045F98DD2B65A01A0072C0FE /* BugTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045F98DC2B65A01A0072C0FE /* BugTask.swift */; };
@@ -46,6 +49,9 @@
 
 /* Begin PBXFileReference section */
 		042DCA442B698F9B00B6F57A /* PopoverViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopoverViewModel.swift; sourceTree = "<group>"; };
+		042DCA4E2B6ADCDA00B6F57A /* FirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
+		042DCA502B6ADD1D00B6F57A /* FirebaseHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseHelper.swift; sourceTree = "<group>"; };
+		042DCA522B6ADD4C00B6F57A /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		045F98D82B644BC50072C0FE /* DailyTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyTask.swift; sourceTree = "<group>"; };
 		045F98DA2B65A0130072C0FE /* FeatureTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureTask.swift; sourceTree = "<group>"; };
 		045F98DC2B65A01A0072C0FE /* BugTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BugTask.swift; sourceTree = "<group>"; };
@@ -98,6 +104,8 @@
 		045F98892B614D880072C0FE /* Service */ = {
 			isa = PBXGroup;
 			children = (
+				042DCA4E2B6ADCDA00B6F57A /* FirebaseManager.swift */,
+				042DCA502B6ADD1D00B6F57A /* FirebaseHelper.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -141,6 +149,7 @@
 				045F98D82B644BC50072C0FE /* DailyTask.swift */,
 				045F98DA2B65A0130072C0FE /* FeatureTask.swift */,
 				045F98DC2B65A01A0072C0FE /* BugTask.swift */,
+				042DCA522B6ADD4C00B6F57A /* User.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -289,11 +298,14 @@
 				042DCA452B698F9B00B6F57A /* PopoverViewModel.swift in Sources */,
 				045F98DD2B65A01A0072C0FE /* BugTask.swift in Sources */,
 				04BC76B52B53299A00AE8593 /* AppDelegate.swift in Sources */,
+				042DCA4F2B6ADCDA00B6F57A /* FirebaseManager.swift in Sources */,
+				042DCA512B6ADD1D00B6F57A /* FirebaseHelper.swift in Sources */,
 				045F98DB2B65A0130072C0FE /* FeatureTask.swift in Sources */,
 				045F98D92B644BC50072C0FE /* DailyTask.swift in Sources */,
 				04BC76B72B532C9300AE8593 /* PopoverTaskView.swift in Sources */,
 				04BC76B92B532FE700AE8593 /* MenuBarDevLogView.swift in Sources */,
 				046699792B4ECA060053C1BD /* DevLogApp.swift in Sources */,
+				042DCA532B6ADD4C00B6F57A /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

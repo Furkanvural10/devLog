@@ -18,6 +18,8 @@ struct PopoverTaskView: View {
     @State private var hoveredItem: Int = 0
     @State var title: String = ""
     
+    @StateObject var viewModel = PopoverViewModel()
+    
     @FocusState private var focused: Bool
     
     
@@ -36,6 +38,11 @@ struct PopoverTaskView: View {
                     formatter.locale = Locale(identifier: "tr_TR")
                     let dateString = formatter.string(from: today)
                     title = dateString
+                    
+                    viewModel.getFeatureTask()
+                    viewModel.getBugTask()
+                    viewModel.getDailyTask()
+                    
         }
             
             HStack(spacing: 10) {
