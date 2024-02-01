@@ -45,11 +45,28 @@ final class PopoverViewModel: ObservableObject {
     func getBugTask() {
         // TODO: Fetch data from db. ViewModel -> Layer -> Manager ->
         print("GetBug Called")
+        database.collection("BugTask").getDocuments { snapshot, error in
+            guard error == nil else { return }
+            
+            guard let snapshot = snapshot else { return }
+            
+            
+            
+            
+        }
     }
     
     func getDailyTask() {
         // TODO: Fetch data from db. ViewModel -> Layer -> Manager ->
-        print("GetDaily Called")
+        database.collection("DailyTask").getDocuments { snapshot, error in
+            guard error == nil else { return }
+            
+            guard let snapshot = snapshot else { return }
+            
+            
+            
+            
+        }
     }
 }
 
