@@ -50,8 +50,7 @@ final class PopoverViewModel: ObservableObject {
             
             guard let snapshot = snapshot else { return }
             
-            
-            
+             
             
         }
     }

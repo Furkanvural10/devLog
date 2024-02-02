@@ -73,6 +73,8 @@ struct PopoverTaskView: View {
                     self.hoveredItem = 0
                     showingList = featureItemList
                 }
+                
+
                 ZStack {
                     Rectangle()
                         .fill(selectedItem == 1 ? .white.opacity(0.1) : Color.clear)
@@ -155,7 +157,12 @@ struct PopoverTaskView: View {
                     .foregroundStyle( hoveredItem == 3 ? .white.opacity(0.1) : .clear)
                     .clipShape(RoundedRectangle(cornerRadius: 5))
                     .padding(.trailing, 8)
-                
+                Menu("+") {
+                    Button("add") {
+                        print("add")
+                    }
+                    .keyboardShortcut("a", modifiers: [.command])
+                }
                 Image(systemName: "plus")
                     .padding(.trailing, 8)
                     .onTapGesture {
@@ -165,6 +172,7 @@ struct PopoverTaskView: View {
 //                        }
                         print(text)
                     }
+                    .keyboardShortcut("B", modifiers: [.command, .shift, .control])
             }
             .onHover { hovering in
                 switch hovering {
