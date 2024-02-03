@@ -17,6 +17,7 @@ struct PopoverTaskView: View {
     @State var showingList: [String] = []
     @State private var hoveredItem: Int = 0
     @State var title: String = ""
+    @State var selectedProject: String = "Psytudents"
     
     @StateObject var viewModel = PopoverViewModel()
     
@@ -157,33 +158,52 @@ struct PopoverTaskView: View {
                     .foregroundStyle( hoveredItem == 3 ? .white.opacity(0.1) : .clear)
                     .clipShape(RoundedRectangle(cornerRadius: 5))
                     .padding(.trailing, 8)
-                Menu("+") {
-                    Button("add") {
-                        print("add")
+                Menu(selectedProject) {
+                    Button("Psytudents") {
+                        self.selectedProject = "Psytundets"
                     }
-                    .keyboardShortcut("a", modifiers: [.command])
-                }
-                Image(systemName: "plus")
-                    .padding(.trailing, 8)
-                    .onTapGesture {
-                        // TODO: (Add item to relevant list
-//                        DispatchQueue.main.async {
-//                            showingList.insert("New value", at: 0)
-//                        }
-                        print(text)
+                    .keyboardShortcut("1", modifiers: [.command])
+                    Button("Stat-ion") {
+                        print("Stat-ion Tab")
+                        self.selectedProject = "Stat-ion"
                     }
-                    .keyboardShortcut("B", modifiers: [.command, .shift, .control])
-            }
-            .onHover { hovering in
-                switch hovering {
-                case true:
-                    self.hoveredItem = 3
-                case false:
-                    self.hoveredItem = selectedItem
+                    .keyboardShortcut("2", modifiers: [.command])
+                    Button("DevLog") {
+                        print("DevLog Tab")
+                        self.selectedProject = "DevLog"
+                    }
+                    .keyboardShortcut("3", modifiers: [.command])
+                    Divider()
+                    Button("New Project") {
+                        
+                    }
+                    .keyboardShortcut("+", modifiers: [.command])
+                    
+                    
+                    
                 }
                 
+                //                Image(systemName: "plus")
+                //                    .padding(.trailing, 8)
+                //                    .onTapGesture {
+                //                        // TODO: (Add item to relevant list
+                ////                        DispatchQueue.main.async {
+                ////                            showingList.insert("New value", at: 0)
+                ////                        }
+                //                        print(text)
+                //                    }
+                //                    .keyboardShortcut("B", modifiers: [.command, .shift, .control])
+                //            }
+                //            .onHover { hovering in
+                //                switch hovering {
+                //                case true:
+                //                    self.hoveredItem = 3
+                //                case false:
+                //                    self.hoveredItem = selectedItem
+                //                }
+                //
+                //            }
             }
-            
             
         }
         .padding(8)
