@@ -9,7 +9,7 @@ struct PopoverTaskView: View {
     @State private var selectedItem: Int = 0
     @State private var text: String = ""
     
-// MARK: - Mock List Data
+    // MARK: - Mock List Data
     @State var featureItemList = ["Feature Item 1", "Feature Item 2", "Feature Item 3", "Feature Item 4", "Feature Item 5"]
     @State var bugItemList = ["Bug Item 1", "Bug Item 2", "Bug Item 3", "Bug Item 4", "Bug Item 5"]
     @State var dailyItemList = ["Daily Item 1", "Daily Item 2", "Daily Item 3", "Daily Item 4", "Daily Item 5"]
@@ -28,23 +28,50 @@ struct PopoverTaskView: View {
     var body: some View {
         
         VStack(spacing: 5) {
-            Text(title)
-                .font(.headline)
-                .padding()
-                .onAppear {
-                    // Move VM ***
-                    let today = Date()
-                    let formatter = DateFormatter()
-                    formatter.dateFormat = "EEEE, MMM d"
-                    formatter.locale = Locale(identifier: "tr_TR")
-                    let dateString = formatter.string(from: today)
-                    title = dateString
+            HStack {
+                
+                Text(title)
+                    .font(.headline)
+                    .padding()
+                    .onAppear {
+                        // Move VM ***
+                        let today = Date()
+                        let formatter = DateFormatter()
+                        formatter.dateFormat = "EEEE, MMM d"
+                        formatter.locale = Locale(identifier: "tr_TR")
+                        let dateString = formatter.string(from: today)
+                        title = dateString
+                        
+                        viewModel.getFeatureTask()
+                        viewModel.getBugTask()
+                        viewModel.getDailyTask()
+                    }
+                Menu(selectedProject) {
+                    Button("Psytudents") {
+                        self.selectedProject = "Psytundets"
+                    }
+                    .keyboardShortcut("1", modifiers: [.command])
+                    Button("Stat-ion") {
+                        print("Stat-ion Tab")
+                        self.selectedProject = "Stat-ion"
+                    }
+                    .keyboardShortcut("2", modifiers: [.command])
+                    Button("DevLog") {
+                        print("DevLog Tab")
+                        self.selectedProject = "DevLog"
+                    }
+                    .keyboardShortcut("3", modifiers: [.command])
+                    Divider()
+                    Button("New Project") {
+                        
+                    }
+                    .keyboardShortcut("+", modifiers: [.command])
                     
-                    viewModel.getFeatureTask()
-                    viewModel.getBugTask()
-                    viewModel.getDailyTask()
                     
-        }
+                    
+                }
+                
+            }
             
             HStack(spacing: 10) {
                 ZStack {
@@ -75,7 +102,7 @@ struct PopoverTaskView: View {
                     showingList = featureItemList
                 }
                 
-
+                
                 ZStack {
                     Rectangle()
                         .fill(selectedItem == 1 ? .white.opacity(0.1) : Color.clear)
@@ -150,7 +177,7 @@ struct PopoverTaskView: View {
                     self.focused = false
                 }
             }
-
+            
             
             ZStack {
                 Rectangle()
@@ -158,51 +185,27 @@ struct PopoverTaskView: View {
                     .foregroundStyle( hoveredItem == 3 ? .white.opacity(0.1) : .clear)
                     .clipShape(RoundedRectangle(cornerRadius: 5))
                     .padding(.trailing, 8)
-                Menu(selectedProject) {
-                    Button("Psytudents") {
-                        self.selectedProject = "Psytundets"
+                
+                
+                Image(systemName: "plus")
+                    .padding(.trailing, 8)
+                    .onTapGesture {
+                        // TODO: (Add item to relevant list
+                        //                        DispatchQueue.main.async {
+                        //                            showingList.insert("New value", at: 0)
+                        //                        }
+                        print(text)
                     }
-                    .keyboardShortcut("1", modifiers: [.command])
-                    Button("Stat-ion") {
-                        print("Stat-ion Tab")
-                        self.selectedProject = "Stat-ion"
-                    }
-                    .keyboardShortcut("2", modifiers: [.command])
-                    Button("DevLog") {
-                        print("DevLog Tab")
-                        self.selectedProject = "DevLog"
-                    }
-                    .keyboardShortcut("3", modifiers: [.command])
-                    Divider()
-                    Button("New Project") {
-                        
-                    }
-                    .keyboardShortcut("+", modifiers: [.command])
-                    
-                    
-                    
+                    .keyboardShortcut("B", modifiers: [.command, .shift, .control])
+            }
+            .onHover { hovering in
+                switch hovering {
+                case true:
+                    self.hoveredItem = 3
+                case false:
+                    self.hoveredItem = selectedItem
                 }
                 
-                //                Image(systemName: "plus")
-                //                    .padding(.trailing, 8)
-                //                    .onTapGesture {
-                //                        // TODO: (Add item to relevant list
-                ////                        DispatchQueue.main.async {
-                ////                            showingList.insert("New value", at: 0)
-                ////                        }
-                //                        print(text)
-                //                    }
-                //                    .keyboardShortcut("B", modifiers: [.command, .shift, .control])
-                //            }
-                //            .onHover { hovering in
-                //                switch hovering {
-                //                case true:
-                //                    self.hoveredItem = 3
-                //                case false:
-                //                    self.hoveredItem = selectedItem
-                //                }
-                //
-                //            }
             }
             
         }
