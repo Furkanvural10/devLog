@@ -1,3 +1,5 @@
+#warning("Fix hard coded")
+
 import SwiftUI
 import FirebaseFirestore
 
@@ -5,72 +7,111 @@ struct PopoverTaskView: View {
     
     @State var isSelected = false
     @State private var isCompleted = false
+    @State private var isRequestNewProject = false
+    @State private var isSelectedProject = false
     
     @State private var selectedItem: Int = 0
-    @State private var text: String = ""
+    @State private var addNewTaskText: String = ""
+    @State private var addNewProjectText: String = ""
     
     // MARK: - Mock List Data
-    @State var featureItemList = ["Feature Item 1", "Feature Item 2", "Feature Item 3", "Feature Item 4", "Feature Item 5"]
+    @State var featureItemList = ["Feature Item 1 Feature Item 1 Feature", "Feature Item 2", "Feature Item 3", "Feature Item 4", "Feature Item 5"]
     @State var bugItemList = ["Bug Item 1", "Bug Item 2", "Bug Item 3", "Bug Item 4", "Bug Item 5"]
     @State var dailyItemList = ["Daily Item 1", "Daily Item 2", "Daily Item 3", "Daily Item 4", "Daily Item 5"]
     
     @State var showingList: [String] = []
     @State private var hoveredItem: Int = 0
     @State var title: String = ""
-    @State var selectedProject: String = "Psytudents"
+    @State var selectedProject: String = "DevLog"
     
     @StateObject var viewModel = PopoverViewModel()
     
     @FocusState private var focused: Bool
     
+    @State var shortString = true
     
     
     var body: some View {
         
         VStack(spacing: 5) {
+            
+            
             HStack {
-                
-                Text(title)
-                    .font(.headline)
+                Text(shortString ? "Welcome" : selectedProject)
+                    .animation(.easeInOut(duration: 0.6))
+                    .font(.title2)
                     .padding()
                     .onAppear {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                            shortString.toggle()
+                        }
+                        
                         // Move VM ***
-                        let today = Date()
-                        let formatter = DateFormatter()
-                        formatter.dateFormat = "EEEE, MMM d"
-                        formatter.locale = Locale(identifier: "tr_TR")
-                        let dateString = formatter.string(from: today)
-                        title = dateString
-                        
-                        viewModel.getFeatureTask()
-                        viewModel.getBugTask()
-                        viewModel.getDailyTask()
+                        //                        let today = Date()
+                        //                        let formatter = DateFormatter()
+                        //                        formatter.dateFormat = "EEEE, MMM d"
+                        //                        formatter.locale = Locale(identifier: "tr_TR")
+                        //                        let dateString = formatter.string(from: today)
+                        //                        title = dateString
+                        //
+                        //                        viewModel.getFeatureTask()
+                        //                        viewModel.getBugTask()
+                        //                        viewModel.getDailyTask()
                     }
-                Menu(selectedProject) {
-                    Button("Psytudents") {
-                        self.selectedProject = "Psytundets"
-                    }
-                    .keyboardShortcut("1", modifiers: [.command])
-                    Button("Stat-ion") {
-                        print("Stat-ion Tab")
-                        self.selectedProject = "Stat-ion"
-                    }
-                    .keyboardShortcut("2", modifiers: [.command])
-                    Button("DevLog") {
-                        print("DevLog Tab")
-                        self.selectedProject = "DevLog"
-                    }
-                    .keyboardShortcut("3", modifiers: [.command])
-                    Divider()
-                    Button("New Project") {
-                        
-                    }
-                    .keyboardShortcut("+", modifiers: [.command])
-                    
-                    
-                    
-                }
                 
+                Spacer()
+                
+                
+                isRequestNewProject ? AnyView(
+                    HStack {
+                        TextField("New Project", text: $addNewProjectText) { text in
+                            
+                        }
+                        .frame(width: 150)
+                        .focused($focused)
+                        .clipShape(RoundedRectangle(cornerRadius: 8))
+                        .padding(.horizontal, 2)
+                        
+                        
+                        Image(systemName: "multiply")
+                            .padding(.trailing, 9)
+                            .onTapGesture {
+                                isRequestNewProject = false
+                            }
+                        
+                        
+                    }
+                )
+                : AnyView (
+                    Menu("Choose Project") {
+                        Button("Psytudents") {
+                            self.selectedProject = "Psytundets"
+                        }
+                        .keyboardShortcut("1", modifiers: [.command])
+                        Button("Stat-ion") {
+                            print("Stat-ion Tab")
+                            self.selectedProject = "Stat-ion"
+                        }
+                        .keyboardShortcut("2", modifiers: [.command])
+                        Button("DevLog") {
+                            print("DevLog Tab")
+                            self.selectedProject = "DevLog"
+                        }
+                        .keyboardShortcut("3", modifiers: [.command])
+                        Divider()
+                        Button("Add New Project") {
+                            isRequestNewProject = true
+                        }
+                        .keyboardShortcut("N", modifiers: [.command])
+                    }
+                        .frame(width: 135, height: 20)
+                        .padding()
+                        .cornerRadius(5)
+                        .opacity(!shortString ? 0.5 : 0)
+                        .animation(.easeInOut(duration: 1))
+                    
+                    
+                )
             }
             
             HStack(spacing: 10) {
@@ -88,6 +129,7 @@ struct PopoverTaskView: View {
                             .foregroundStyle(selectedItem == 0 ? .white : .white.opacity(0.5))
                     }
                 }
+                
                 .onHover(perform: { hovering in
                     switch hovering {
                     case true:
@@ -147,6 +189,7 @@ struct PopoverTaskView: View {
                         
                     }
                 }
+                .keyboardShortcut("B", modifiers: [.command, .shift, .control])
                 .onHover(perform: { hovering in
                     switch hovering {
                     case true:
@@ -166,8 +209,8 @@ struct PopoverTaskView: View {
         
         
         HStack {
-            TextField("New Task", text: $text) { text in
-                print($text)
+            TextField("New Task", text: $addNewTaskText) { text in
+                
             }
             .focused($focused)
             .clipShape(RoundedRectangle(cornerRadius: 8))
@@ -194,9 +237,10 @@ struct PopoverTaskView: View {
                         //                        DispatchQueue.main.async {
                         //                            showingList.insert("New value", at: 0)
                         //                        }
-                        print(text)
+                        
+                        
                     }
-                    .keyboardShortcut("B", modifiers: [.command, .shift, .control])
+                
             }
             .onHover { hovering in
                 switch hovering {
@@ -207,9 +251,9 @@ struct PopoverTaskView: View {
                 }
                 
             }
-            
         }
         .padding(8)
+        
         
         showingList.isEmpty ?
         AnyView(

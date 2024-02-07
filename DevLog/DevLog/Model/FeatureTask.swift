@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct FeatureTask {
+struct FeatureTask: Codable {
     var id: String
     var task: String
 }
