@@ -37,7 +37,7 @@ extension AppDelegate {
         
         let currentUser = Auth.auth().currentUser
         guard currentUser == nil else {
-            print("App has user")
+            print("App has user \(currentUser!.uid)")
             return
         }
         
@@ -54,6 +54,7 @@ extension AppDelegate {
             
             let user = result.user.uid
             print("User created successfully : \(user) ")
+            
             
         }
     }

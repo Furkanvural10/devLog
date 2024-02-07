@@ -69,12 +69,17 @@ struct PopoverTaskView: View {
                         .focused($focused)
                         .clipShape(RoundedRectangle(cornerRadius: 8))
                         .padding(.horizontal, 2)
+                        .onSubmit {
+                            viewModel.addProject(addNewProjectText)
+                            addNewProjectText = ""
+                            isRequestNewProject.toggle()
+                        }
                         
                         
-                        Image(systemName: "multiply")
+                        Image(systemName: addNewProjectText.count > 0 ? "plus" : "multiply")
                             .padding(.trailing, 9)
                             .onTapGesture {
-                                isRequestNewProject = false
+                                addNewProjectText.count > 0 ? viewModel.addProject(addNewProjectText) :  isRequestNewProject.toggle()
                             }
                         
                         
@@ -98,7 +103,7 @@ struct PopoverTaskView: View {
                         .keyboardShortcut("3", modifiers: [.command])
                         Divider()
                         Button("Add New Project") {
-                            isRequestNewProject = true
+                            isRequestNewProject.toggle()
                         }
                         .keyboardShortcut("N", modifiers: [.command])
                     }
@@ -226,7 +231,7 @@ struct PopoverTaskView: View {
             
             ZStack {
                 Rectangle()
-                    .frame(width: 20, height: 20)
+                    .frame(width: 30, height: 30)
                     .foregroundStyle(plusHoveredItem ? .white.opacity(0.1) : .clear)
                     .clipShape(RoundedRectangle(cornerRadius: 5))
                     .padding(.trailing, 8)
@@ -236,7 +241,7 @@ struct PopoverTaskView: View {
                     .padding(.trailing, 8)
                     .onTapGesture {
                         // Item added
-//                        viewModel.saveTask(selectedItem, addNewTaskText)
+                        viewModel.saveTask(selectedTask, addNewTaskText)
                         addNewTaskText = ""
                     }
                 

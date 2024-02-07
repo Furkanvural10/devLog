@@ -1,5 +1,6 @@
 import Foundation
 import FirebaseFirestore
+import FirebaseAuth
 
 protocol PopoverViewModelProtocol {
     
@@ -18,6 +19,8 @@ final class PopoverViewModel: ObservableObject {
     let database = Firestore.firestore()
     
     init() {}
+    
+    
     
     func getFeatureTask() {
         // TODO: Fetch data from db. ViewModel -> Layer -> Manager ->
@@ -66,17 +69,53 @@ final class PopoverViewModel: ObservableObject {
             
             guard let snapshot = snapshot else { return }
             
-            
-            
-            
         }
     }
     
-    func saveTask(_ taskItem: Int, _ taskText: String) {
-//        switch taskItem {
-//            
-//        }
+    func saveTask(_ taskItem: TaskType, _ taskText: String) {
         
+        let uuid = Auth.auth().currentUser?.uid
+        guard let id = uuid else { return }
+        let database = Firestore.firestore()
+        
+        // Tasktex
+        
+        
+        switch taskItem {
+        case .feature:
+            #warning("Moved layer")
+            let taskReference = database.collection("user").document(id).collection("FeatureTask")
+            let taskID = UUID()
+            let newTask = [
+                "id": "\(id)",
+                "task": taskText
+            ]
+            taskReference.addDocument(data: newTask) { error in
+                if let error = error {
+                    print("Görev eklenirken hata oluştu: \(error)")
+                } else {
+                    print("Yeni görev başarıyla eklendi.")
+                }
+            }
+        case .bug:
+            print("Bug taskına kaydet")
+        case .daily:
+            print("Daily taskına kaydet")
+        }
+        
+    }
+    
+    func addProject(_ projectName: String) {
+        let uuid = Auth.auth().currentUser?.uid
+        guard let id = uuid else { return }
+        let taskReference = database.collection("user").document(id).collection(projectName).addDocument(data: [:]) { error in
+            if let error = error {
+                print("Hata olustu")
+            } else {
+                print("Başarılı şekilde oluştu")
+            }
+            
+        }
     }
 }
 
