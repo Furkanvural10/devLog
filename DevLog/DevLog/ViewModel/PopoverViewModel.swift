@@ -29,12 +29,12 @@ final class PopoverViewModel: ObservableObject {
             
             guard let snapshot = snapshot else { return }
             
-            var data = [FeatureTask]()
+            
             for document in snapshot.documents {
                 do {
                     let product = try document.data(as: FeatureTask.self)
-                    data.append(product)
-                    print("Coming data \(data[0])")
+                    self.featureTaskList.append(product)
+                    
                 }
                 catch {
                     print("decode error")

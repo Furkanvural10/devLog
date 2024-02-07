@@ -8,8 +8,6 @@
 import Foundation
 
 struct DailyTask: Codable {
-    
     var id: String
-    var title: String
-    
+    var task: String
 }

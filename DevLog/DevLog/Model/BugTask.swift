@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct BugTask {
+struct BugTask: Codable {
     var id: String
     var task: String
 }

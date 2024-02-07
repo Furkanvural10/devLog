@@ -14,10 +14,9 @@ struct PopoverTaskView: View {
     @State private var addNewTaskText: String = ""
     @State private var addNewProjectText: String = ""
     
-    // MARK: - Mock List Data
-    @State var featureItemList = ["Feature Item 1 Feature Item 1 Feature", "Feature Item 2", "Feature Item 3", "Feature Item 4", "Feature Item 5"]
-    @State var bugItemList = ["Bug Item 1", "Bug Item 2", "Bug Item 3", "Bug Item 4", "Bug Item 5"]
-    @State var dailyItemList = ["Daily Item 1", "Daily Item 2", "Daily Item 3", "Daily Item 4", "Daily Item 5"]
+    @State var featureItemList: [FeatureTask] = []
+    @State var bugItemList: [BugTask] = []
+    @State var dailyItemList: [DailyTask] = []
     
     @State var showingList: [String] = []
     @State private var hoveredItem: Int = 0
@@ -42,21 +41,13 @@ struct PopoverTaskView: View {
                     .font(.title2)
                     .padding()
                     .onAppear {
+                        viewModel.getFeatureTask()
+                        viewModel.getBugTask()
+                        viewModel.getDailyTask()
                         DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
                             shortString.toggle()
                         }
                         
-                        // Move VM ***
-                        //                        let today = Date()
-                        //                        let formatter = DateFormatter()
-                        //                        formatter.dateFormat = "EEEE, MMM d"
-                        //                        formatter.locale = Locale(identifier: "tr_TR")
-                        //                        let dateString = formatter.string(from: today)
-                        //                        title = dateString
-                        //
-                        //                        viewModel.getFeatureTask()
-                        //                        viewModel.getBugTask()
-                        //                        viewModel.getDailyTask()
                     }
                 
                 Spacer()
@@ -141,7 +132,9 @@ struct PopoverTaskView: View {
                 .onTapGesture {
                     self.selectedItem = 0
                     self.hoveredItem = 0
-                    showingList = featureItemList
+                    //                    showingList = featureItemList
+                    featureItemList = viewModel.featureTaskList
+                    showingList = viewModel.featureTaskList.map({ $0.task })
                 }
                 
                 
@@ -172,7 +165,8 @@ struct PopoverTaskView: View {
                     print("Tıklandı")
                     self.selectedItem = 1
                     self.hoveredItem = 1
-                    showingList = bugItemList
+                    bugItemList = viewModel.bugTaskList
+                    showingList = bugItemList.map({ $0.task })
                 }
                 
                 ZStack {
@@ -202,7 +196,8 @@ struct PopoverTaskView: View {
                     print("Bugs Tıklandı")
                     self.selectedItem = 2
                     self.hoveredItem = 2
-                    showingList = dailyItemList
+                    dailyItemList = viewModel.dailyTaskList
+                    showingList = dailyItemList.map({ $0.task })
                 }
             }
         }
@@ -287,10 +282,17 @@ struct PopoverTaskView: View {
                                 .clipShape(Circle())
                                 .offset(x: 125, y: -17)
                                 .onTapGesture {
-                                    print("Clicked text delete")
+                                    
                                 }
                             Text(item)
                                 .strikethrough(isCompleted, color: .gray)
+                                .contextMenu {
+                                    Button("Delete") {
+                                        if let index = showingList.firstIndex(of: item) {
+                                            showingList.remove(at: index)
+                                        }
+                                    }
+                                }
                         }
                         Rectangle()
                             .frame(width: 5, height: 5)
