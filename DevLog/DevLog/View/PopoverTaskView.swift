@@ -38,10 +38,7 @@ struct PopoverTaskView: View {
     
     
     var body: some View {
-        
         VStack(spacing: 5) {
-            
-            
             HStack {
                 Text(shortString ? "Welcome" : selectedProject)
                     .animation(.easeInOut(duration: 0.6))
@@ -54,12 +51,8 @@ struct PopoverTaskView: View {
                         DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
                             shortString.toggle()
                         }
-                        
                     }
-                
                 Spacer()
-                
-                
                 isRequestNewProject ? AnyView(
                     HStack {
                         TextField("New Project", text: $addNewProjectText) { text in
@@ -74,15 +67,11 @@ struct PopoverTaskView: View {
                             addNewProjectText = ""
                             isRequestNewProject.toggle()
                         }
-                        
-                        
                         Image(systemName: addNewProjectText.count > 0 ? "plus" : "multiply")
                             .padding(.trailing, 9)
                             .onTapGesture {
                                 addNewProjectText.count > 0 ? viewModel.addProject(addNewProjectText) :  isRequestNewProject.toggle()
                             }
-                        
-                        
                     }
                 )
                 : AnyView (

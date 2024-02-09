@@ -20,6 +20,10 @@ final class PopoverViewModel: ObservableObject {
     
     init() {}
     
+    func getAllProject() {
+        
+    }
+    
     
     
     func getFeatureTask() {
