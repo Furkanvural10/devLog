@@ -1,4 +1,4 @@
-#warning("Fix hard coded")
+
 
 import SwiftUI
 import FirebaseFirestore

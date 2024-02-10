@@ -30,7 +30,7 @@ final class PopoverViewModel: ObservableObject {
         // TODO: Fetch data from db. ViewModel -> Layer -> Manager ->
         
         
-        #warning("Moved manager with layer")
+        
         database.collection("FeatureTask").getDocuments { snapshot, error in
             guard error == nil else { return }
             
@@ -87,7 +87,7 @@ final class PopoverViewModel: ObservableObject {
         
         switch taskItem {
         case .feature:
-            #warning("Moved layer")
+            
             let taskReference = database.collection("user").document(id).collection("FeatureTask")
             let taskID = UUID()
             let newTask = [
