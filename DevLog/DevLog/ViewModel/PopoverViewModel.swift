@@ -3,7 +3,6 @@ import FirebaseFirestore
 import FirebaseAuth
 
 protocol PopoverViewModelProtocol {
-    
     func getFeatureTask()
     func getBugTask()
     func getDailyTask()
@@ -21,15 +20,11 @@ final class PopoverViewModel: ObservableObject {
     init() {}
     
     func getAllProject() {
-        
+        // User -> userId -> Project -> All Project Name
     }
-    
-    
     
     func getFeatureTask() {
         // TODO: Fetch data from db. ViewModel -> Layer -> Manager ->
-        
-        
         
         database.collection("FeatureTask").getDocuments { snapshot, error in
             guard error == nil else { return }

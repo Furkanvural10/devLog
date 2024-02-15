@@ -11,6 +11,7 @@
 		042DCA4F2B6ADCDA00B6F57A /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042DCA4E2B6ADCDA00B6F57A /* FirebaseManager.swift */; };
 		042DCA512B6ADD1D00B6F57A /* FirebaseHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042DCA502B6ADD1D00B6F57A /* FirebaseHelper.swift */; };
 		042DCA532B6ADD4C00B6F57A /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042DCA522B6ADD4C00B6F57A /* User.swift */; };
+		045911D02B7E9BC6006A2FD7 /* StringConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045911CF2B7E9BC6006A2FD7 /* StringConstant.swift */; };
 		045F98D92B644BC50072C0FE /* DailyTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045F98D82B644BC50072C0FE /* DailyTask.swift */; };
 		045F98DB2B65A0130072C0FE /* FeatureTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045F98DA2B65A0130072C0FE /* FeatureTask.swift */; };
 		045F98DD2B65A01A0072C0FE /* BugTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045F98DC2B65A01A0072C0FE /* BugTask.swift */; };
@@ -52,6 +53,7 @@
 		042DCA4E2B6ADCDA00B6F57A /* FirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
 		042DCA502B6ADD1D00B6F57A /* FirebaseHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseHelper.swift; sourceTree = "<group>"; };
 		042DCA522B6ADD4C00B6F57A /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		045911CF2B7E9BC6006A2FD7 /* StringConstant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringConstant.swift; sourceTree = "<group>"; };
 		045F98D82B644BC50072C0FE /* DailyTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyTask.swift; sourceTree = "<group>"; };
 		045F98DA2B65A0130072C0FE /* FeatureTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureTask.swift; sourceTree = "<group>"; };
 		045F98DC2B65A01A0072C0FE /* BugTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BugTask.swift; sourceTree = "<group>"; };
@@ -101,6 +103,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		045911CE2B7E9BB8006A2FD7 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				045911CF2B7E9BC6006A2FD7 /* StringConstant.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
 		045F98892B614D880072C0FE /* Service */ = {
 			isa = PBXGroup;
 			children = (
@@ -173,6 +183,7 @@
 		046699772B4ECA060053C1BD /* DevLog */ = {
 			isa = PBXGroup;
 			children = (
+				045911CE2B7E9BB8006A2FD7 /* Utilities */,
 				045F98D72B644B0C0072C0FE /* Model */,
 				046699812B4ECA070053C1BD /* DevLog.entitlements */,
 				045F98B12B62FBAB0072C0FE /* Constants */,
@@ -295,6 +306,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				045911D02B7E9BC6006A2FD7 /* StringConstant.swift in Sources */,
 				042DCA452B698F9B00B6F57A /* PopoverViewModel.swift in Sources */,
 				045F98DD2B65A01A0072C0FE /* BugTask.swift in Sources */,
 				04BC76B52B53299A00AE8593 /* AppDelegate.swift in Sources */,
