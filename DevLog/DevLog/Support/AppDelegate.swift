@@ -33,7 +33,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 extension AppDelegate {
     
     
-    func createUser() {
+    private func createUser() {
         
         let currentUser = Auth.auth().currentUser
         guard currentUser == nil else {

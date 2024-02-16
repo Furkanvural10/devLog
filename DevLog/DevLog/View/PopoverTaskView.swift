@@ -23,6 +23,7 @@ struct PopoverTaskView: View {
     @State var featureItemList: [FeatureTask] = []
     @State var bugItemList: [BugTask] = []
     @State var dailyItemList: [DailyTask] = []
+    @State var projects: [String] = []
     
     @State var showingList: [String] = []
     @State private var hoveredItem: TaskType = .feature
@@ -45,10 +46,11 @@ struct PopoverTaskView: View {
                     .font(.title2)
                     .padding()
                     .onAppear {
+                        viewModel.getAllProject()
                         viewModel.getFeatureTask()
                         viewModel.getBugTask()
                         viewModel.getDailyTask()
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                             shortString.toggle()
                         }
                     }
@@ -61,10 +63,11 @@ struct PopoverTaskView: View {
                         .frame(width: 150)
                         .focused($focused)
                         .clipShape(RoundedRectangle(cornerRadius: 8))
-                        .padding(.horizontal, 2)
+                        //                        .padding(.horizontal, 2)
                         .onSubmit {
                             viewModel.addProject(addNewProjectText)
                             addNewProjectText = ""
+//                            viewModel.getAllProject()
                             isRequestNewProject.toggle()
                         }
                         Image(systemName: addNewProjectText.count > 0 ? "plus" : "multiply")
@@ -76,20 +79,16 @@ struct PopoverTaskView: View {
                 )
                 : AnyView (
                     Menu("Choose Project") {
-                        Button("Psytudents") {
-                            self.selectedProject = "Psytundets"
+                        ForEach(viewModel.allProjectList, id: \.self) { project in
+                            Button(project) {
+                                self.selectedProject = project
+                                print("\(project) Tab")
+                            }
+//                            .keyboardShortcut("N", modifiers: [.command])
+                            .keyboardShortcut(.init(project.first!))
+
+
                         }
-                        .keyboardShortcut("1", modifiers: [.command])
-                        Button("Stat-ion") {
-                            print("Stat-ion Tab")
-                            self.selectedProject = "Stat-ion"
-                        }
-                        .keyboardShortcut("2", modifiers: [.command])
-                        Button("DevLog") {
-                            print("DevLog Tab")
-                            self.selectedProject = "DevLog"
-                        }
-                        .keyboardShortcut("3", modifiers: [.command])
                         Divider()
                         Button("Add New Project") {
                             isRequestNewProject.toggle()
@@ -100,8 +99,6 @@ struct PopoverTaskView: View {
                         .padding()
                         .cornerRadius(5)
                         .opacity(!shortString ? 0.5 : 0)
-                        .animation(.easeInOut(duration: 1))
-                    
                     
                 )
             }
@@ -272,7 +269,7 @@ struct PopoverTaskView: View {
                                 .frame(height: 40)
                                 .foregroundStyle(.gray.opacity(0.1))
                                 .clipShape(RoundedRectangle(cornerRadius: 5))
-
+                            
                             Text(item)
                                 .strikethrough(isCompleted, color: .gray)
                                 .contextMenu {
