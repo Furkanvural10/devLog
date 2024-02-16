@@ -22,7 +22,7 @@ final class PopoverViewModel: ObservableObject {
     init() {}
     
     func getAllProject() {
-        
+        allProjectList.removeAll(keepingCapacity: false)
         let db = Firestore.firestore()
         guard let userID else { return }
         

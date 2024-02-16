@@ -67,7 +67,7 @@ struct PopoverTaskView: View {
                         .onSubmit {
                             viewModel.addProject(addNewProjectText)
                             addNewProjectText = ""
-//                            viewModel.getAllProject()
+                            viewModel.getAllProject()
                             isRequestNewProject.toggle()
                         }
                         Image(systemName: addNewProjectText.count > 0 ? "plus" : "multiply")
