@@ -3,7 +3,7 @@
 import SwiftUI
 import FirebaseFirestore
 
-enum TaskType: Int {
+enum TaskType: String {
     case feature
     case bug
     case daily
@@ -47,9 +47,6 @@ struct PopoverTaskView: View {
                     .padding()
                     .onAppear {
                         viewModel.getAllProject()
-                        viewModel.getFeatureTask()
-                        viewModel.getBugTask()
-                        viewModel.getDailyTask()
                         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                             shortString.toggle()
                         }
@@ -63,7 +60,6 @@ struct PopoverTaskView: View {
                         .frame(width: 150)
                         .focused($focused)
                         .clipShape(RoundedRectangle(cornerRadius: 8))
-                        //                        .padding(.horizontal, 2)
                         .onSubmit {
                             viewModel.addProject(addNewProjectText)
                             addNewProjectText = ""
@@ -84,10 +80,8 @@ struct PopoverTaskView: View {
                                 self.selectedProject = project
                                 print("\(project) Tab")
                             }
-//                            .keyboardShortcut("N", modifiers: [.command])
                             .keyboardShortcut(.init(project.first!))
-
-
+                            
                         }
                         Divider()
                         Button("Add New Project") {
@@ -131,8 +125,9 @@ struct PopoverTaskView: View {
                     self.selectedTask = .feature
                     self.hoveredItem = .feature
                     //                    showingList = featureItemList
-                    featureItemList = viewModel.featureTaskList
-                    showingList = viewModel.featureTaskList.map({ $0.task })
+//                    featureItemList = viewModel.featureTaskList
+//                    showingList = viewModel.featureTaskList.map({ $0.task })
+//                    print("showingList: \(showingList)")
                 }
                 
                 
@@ -148,7 +143,6 @@ struct PopoverTaskView: View {
                             .foregroundStyle(.red)
                         Text("Bugs")
                             .foregroundStyle(selectedTask == .bug ? .white : .white.opacity(0.5))
-                        
                     }
                 }
                 .onHover(perform: { hovering in
@@ -160,11 +154,11 @@ struct PopoverTaskView: View {
                     }
                 })
                 .onTapGesture {
-                    print("Tıklandı")
+                    
                     self.selectedTask = .bug
                     self.hoveredItem = .bug
-                    bugItemList = viewModel.bugTaskList
-                    showingList = bugItemList.map({ $0.task })
+//                    bugItemList = viewModel.bugTaskList
+//                    showingList = bugItemList.map({ $0.task })
                 }
                 
                 ZStack {
@@ -192,10 +186,11 @@ struct PopoverTaskView: View {
                 })
                 .onTapGesture {
                     print("Bugs Tıklandı")
+//                    self.viewModel.getTask(taskType: .bug, projectName: selectedProject)
                     self.selectedTask = .daily
                     self.hoveredItem = .daily
-                    dailyItemList = viewModel.dailyTaskList
-                    showingList = dailyItemList.map({ $0.task })
+//                    dailyItemList = viewModel.dailyTaskList
+//                    showingList = dailyItemList.map({ $0.task })
                 }
             }
         }

@@ -3,9 +3,10 @@ import FirebaseFirestore
 import FirebaseAuth
 
 protocol PopoverViewModelProtocol {
-    func getFeatureTask()
-    func getBugTask()
-    func getDailyTask()
+//    func getFeatureTask(projectName: String)
+//    func getBugTask()
+//    func getDailyTask()
+    func getTask<T: Codable>(taskType: TaskType, projectName: String, completion: @escaping (Result<T, Error>?) -> Void)
     
 }
 
@@ -23,82 +24,76 @@ final class PopoverViewModel: ObservableObject {
     
     func getAllProject() {
         allProjectList.removeAll(keepingCapacity: false)
-        let db = Firestore.firestore()
+        
         guard let userID else { return }
         
-        let projectsRef = db.collection("users").document(userID).collection("Project")
+        let projectsRef = database.collection("users").document(userID).collection("Project")
         
-        projectsRef.getDocuments { (querySnapshot, err) in
-            if let err = err {
-                print("Error getting documents: \(err)")
-            } else {
-                for document in querySnapshot!.documents {
-                    print("\(document.documentID)")
-                    self.allProjectList.append(document.documentID)
-                }
+        projectsRef.getDocuments { (querySnapshot, error) in
+            guard error == nil else { return }
+            for document in querySnapshot!.documents {
+                print("\(document.documentID)")
+                self.allProjectList.append(document.documentID)
             }
         }
     }
     
-    func getFeatureTask() {
-        // TODO: Fetch data from db. ViewModel -> Layer -> Manager ->
+    
+    func getTask(taskType: TaskType, projectName: String) {
         
-        database.collection("FeatureTask").getDocuments { snapshot, error in
-            guard error == nil else { return }
-            
-            guard let snapshot = snapshot else { return }
-            
-            
-            for document in snapshot.documents {
-                do {
-                    let product = try document.data(as: FeatureTask.self)
-                    self.featureTaskList.append(product)
-                }
-                catch {
-                    print("decode error")
-                    return
-                }
+
+        GetTask.shared.getTask(taskType: taskType, projectName: projectName) { result in
+            switch result {
+            case .success(let success):
+                success
+            case .failure(let failure):
+                print("fa,lure")
+            case nil:
+                print("fa,nil")
+
             }
         }
+        
     }
     
-    func getBugTask() {
-        // TODO: Fetch data from db. ViewModel -> Layer -> Manager ->
-#warning("Fixed here")
-        
-        print("GetBug Called")
-        database.collection("BugTask").getDocuments { snapshot, error in
-            guard error == nil else { return }
-            
-            guard let snapshot = snapshot else { return }
-            
-            
-            
-        }
-    }
+//    func getFeatureTask(projectName: String) {
+//        // TODO: Fetch data from db. ViewModel -> Layer -> Manager ->
+//        guard let userID else { return }
+//        database.collection("users").document(userID).collection("Project").document(projectName).collection("Feature").addSnapshotListener
+//        
+//    }
     
-    func getDailyTask() {
-        // TODO: Fetch data from db. ViewModel -> Layer -> Manager ->
-        
-        database.collection("DailyTask").getDocuments { snapshot, error in
-            guard error == nil else { return }
-            
-            guard let snapshot = snapshot else { return }
-            
-        }
-    }
+//    func getBugTask() {
+//        // TODO: Fetch data from db. ViewModel -> Layer -> Manager ->
+//#warning("Fixed here")
+//        
+//        print("GetBug Called")
+//        database.collection("BugTask").getDocuments { snapshot, error in
+//            guard error == nil else { return }
+//            
+//            guard let snapshot = snapshot else { return }
+//            
+//            
+//            
+//        }
+//    }
+//    
+//    func getDailyTask() {
+//        // TODO: Fetch data from db. ViewModel -> Layer -> Manager ->
+//        
+//        database.collection("DailyTask").getDocuments { snapshot, error in
+//            guard error == nil else { return }
+//            
+//            guard let snapshot = snapshot else { return }
+//            
+//        }
+//    }
     
     func saveTask(_ taskItem: TaskType, _ taskText: String) {
-        
         guard let userID else { return }
-        let database = Firestore.firestore()
-        
-        // Tasktex
-        
-        
+
         switch taskItem {
-        case .feature:
-            
+        case .feature: 
             let taskReference = database.collection("user").document(userID).collection("FeatureTask")
             let taskID = UUID()
             let newTask = [
@@ -127,22 +122,23 @@ final class PopoverViewModel: ObservableObject {
         let projectRef = userRef.collection("Project").document(projectName)
         
         projectRef.setData(["name": projectName]) { error in
-            if let error = error {
-                print("Error adding project: \(error)")
-            } else {
-                print("Project added successfully")
-                
-                let collections = ["Feature","Bug"]
-                for collectionName in collections {
-                    projectRef.collection(collectionName).addDocument(data: [:]) { error in
-                        guard error == nil else { return }
-                    }
+            guard error == nil else { return }
+            
+            let collections = ["Feature","Bug"]
+            for collectionName in collections {
+                projectRef.collection(collectionName).addDocument(data: [:]) { error in
+                    guard error == nil else { return }
                 }
+                
             }
         }
     }
 }
 
 extension PopoverViewModel: PopoverViewModelProtocol {
+    func getTask<T>(taskType: TaskType, projectName: String, completion: @escaping (Result<T, Error>?) -> Void) where T : Decodable, T : Encodable {
+        
+    }
+    
     
 }

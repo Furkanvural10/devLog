@@ -11,6 +11,8 @@ protocol FirebaseManagerProtocol {
 final class FirebaseManager: FirebaseManagerProtocol {
     
     static let shared = FirebaseManager()
+    private var userID = ""
+    private var database = Firestore.firestore()
     
     private init() {}
     
@@ -27,7 +29,28 @@ final class FirebaseManager: FirebaseManagerProtocol {
             }
             
             let user = User(userID: result.user.uid)
+            self.userID = result.user.uid
             completion(.success(user))
+        }
+    }
+    
+    func getTask<T: Codable>(taskType: TaskType, projectName: String, completion: @escaping (Result<T, Error>?) -> Void) {
+        
+        database.collection("users").document(userID).collection("Project").document(projectName).collection(taskType.rawValue).addSnapshotListener { snapshot, error in
+            
+            guard error == nil else { return }
+            guard let snapshot = snapshot else { return }
+            
+            for document in snapshot.documents {
+                do {
+                    let product = try document.data(as: T.self)
+                    completion(.success(product))
+                }
+                catch {
+                    print("decode error")
+                    return
+                }
+            }
         }
     }
     
