@@ -12,7 +12,15 @@ final class GetTask {
     static let shared = GetTask()
     private init() {}
     
-    func getTask(taskType: TaskType, projectName: String, completion: @escaping (Result<FeatureTask, Error>?) -> Void) {
+    func getFeatureTask(taskType: TaskType, projectName: String, completion: @escaping (Result<[FeatureTask], Error>) -> Void) {
         FirebaseManager.shared.getTask(taskType: taskType, projectName: projectName, completion: completion)
+    }
+    
+    func getBugTask(taskType: TaskType, projectName: String, completion: @escaping (Result<[BugTask], Error>) -> Void) {
+        FirebaseManager.shared.getTask(taskType: taskType, projectName: projectName, completion: completion)
+    }
+    
+    func getDailyTask(taskType: TaskType, projectName: String, completion: @escaping (Result<[DailyTask], NetworkError>) -> Void) {
+        FirebaseManager.shared.getData(completion: completion)
     }
 }

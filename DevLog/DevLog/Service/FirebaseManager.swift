@@ -4,11 +4,13 @@ import FirebaseFirestore
 
 protocol FirebaseManagerProtocol {
 //    func createAnonymousUser(completion: @escaping ((Result<User, NetworkError>) -> Void))
-    func getData<T: Codable>(child: String, completion: @escaping ((Result<[T], NetworkError>) -> Void))
+    func getData<T: Codable>(completion: @escaping ((Result<T, NetworkError>) -> Void))
 }
 
 
 final class FirebaseManager: FirebaseManagerProtocol {
+    
+    
     
     static let shared = FirebaseManager()
     private var userID = ""
@@ -34,9 +36,11 @@ final class FirebaseManager: FirebaseManagerProtocol {
         }
     }
     
-    func getTask<T: Codable>(taskType: TaskType, projectName: String, completion: @escaping (Result<T, Error>?) -> Void) {
+    func getTask<T: Codable>(taskType: TaskType, projectName: String, completion: @escaping (Result<T, Error>) -> Void) {
         
-        database.collection("users").document(userID).collection("Project").document(projectName).collection(taskType.rawValue).addSnapshotListener { snapshot, error in
+        guard let id = Auth.auth().currentUser?.uid else { return }
+        
+        database.collection("users").document(id).collection("Project").document(projectName).collection(taskType.rawValue).addSnapshotListener { snapshot, error in
             
             guard error == nil else { return }
             guard let snapshot = snapshot else { return }
@@ -54,10 +58,11 @@ final class FirebaseManager: FirebaseManagerProtocol {
         }
     }
     
-    func getData<T: Codable>(child: String, completion: @escaping ((Result<[T], NetworkError>) -> Void)) {
+    func getData<T: Codable>(completion: @escaping ((Result<T, NetworkError>) -> Void)) {
         
+        guard let id = Auth.auth().currentUser?.uid else { return }
         let database = Firestore.firestore()
-        database.collection(child).addSnapshotListener { snapshot, error in
+        database.collection("daily").addSnapshotListener { snapshot, error in
             guard error == nil else {
                 print("Data error")
                 completion(.failure(.dataError))
@@ -74,6 +79,7 @@ final class FirebaseManager: FirebaseManagerProtocol {
                 do {
                     let product = try document.data(as: T.self)
                     products.append(product)
+                    completion(.success(product))
                 }
                 catch {
                     print("decode error")
@@ -81,7 +87,6 @@ final class FirebaseManager: FirebaseManagerProtocol {
                     return
                 }
             }
-            completion(.success(products))
         }
     }
 }

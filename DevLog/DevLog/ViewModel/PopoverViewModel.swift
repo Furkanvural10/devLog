@@ -16,6 +16,7 @@ final class PopoverViewModel: ObservableObject {
     @Published var bugTaskList = [BugTask]()
     @Published var dailyTaskList = [DailyTask]()
     @Published var allProjectList = [String]()
+    @Published var errorMessage = ""
     
     private let database = Firestore.firestore()
     private let userID = Auth.auth().currentUser?.uid
@@ -39,55 +40,40 @@ final class PopoverViewModel: ObservableObject {
     }
     
     
-    func getTask(taskType: TaskType, projectName: String) {
+    func getFeatureTask(taskType: TaskType, projectName: String) {
         
-
-        GetTask.shared.getTask(taskType: taskType, projectName: projectName) { result in
+        GetTask.shared.getFeatureTask(taskType: taskType, projectName: projectName) { result in
             switch result {
             case .success(let success):
-                success
+                self.featureTaskList = success
             case .failure(let failure):
-                print("fa,lure")
-            case nil:
-                print("fa,nil")
-
+                self.errorMessage = failure.localizedDescription
+                print("ERROR! \(failure.localizedDescription)")
             }
         }
-        
     }
     
-//    func getFeatureTask(projectName: String) {
-//        // TODO: Fetch data from db. ViewModel -> Layer -> Manager ->
-//        guard let userID else { return }
-//        database.collection("users").document(userID).collection("Project").document(projectName).collection("Feature").addSnapshotListener
-//        
-//    }
+    func getBugTask(taskType: TaskType, projectName: String) {
+        GetTask.shared.getBugTask(taskType: taskType, projectName: projectName) { result in
+            switch result {
+            case .success(let success):
+                self.bugTaskList = success
+            case .failure(let failure):
+                self.errorMessage = failure.localizedDescription
+            }
+        }
+    }
     
-//    func getBugTask() {
-//        // TODO: Fetch data from db. ViewModel -> Layer -> Manager ->
-//#warning("Fixed here")
-//        
-//        print("GetBug Called")
-//        database.collection("BugTask").getDocuments { snapshot, error in
-//            guard error == nil else { return }
-//            
-//            guard let snapshot = snapshot else { return }
-//            
-//            
-//            
-//        }
-//    }
-//    
-//    func getDailyTask() {
-//        // TODO: Fetch data from db. ViewModel -> Layer -> Manager ->
-//        
-//        database.collection("DailyTask").getDocuments { snapshot, error in
-//            guard error == nil else { return }
-//            
-//            guard let snapshot = snapshot else { return }
-//            
-//        }
-//    }
+    func getDailyTask(taskType: TaskType, projectName: String) {
+        GetTask.shared.getDailyTask(taskType: taskType, projectName: projectName) { result in
+            switch result {
+            case .success(let success):
+                self.dailyTaskList = success
+            case .failure(let failure):
+                self.errorMessage = failure.localizedDescription
+            }
+        }
+    }
     
     func saveTask(_ taskItem: TaskType, _ taskText: String) {
         guard let userID else { return }

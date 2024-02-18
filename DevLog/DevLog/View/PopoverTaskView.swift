@@ -30,6 +30,9 @@ struct PopoverTaskView: View {
     @State private var plusHoveredItem: Bool = false
     @State var title: String = ""
     @State var selectedProject: String = "DevLog"
+    @State var menuTitle1: String = "Choose Project"
+    @State var menuTitle2: String = "Add Project +"
+    
     
     @StateObject var viewModel = PopoverViewModel()
     
@@ -47,6 +50,7 @@ struct PopoverTaskView: View {
                     .padding()
                     .onAppear {
                         viewModel.getAllProject()
+                        viewModel.getFeatureTask(taskType: .feature, projectName: selectedProject)
                         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                             shortString.toggle()
                         }
@@ -62,8 +66,10 @@ struct PopoverTaskView: View {
                         .clipShape(RoundedRectangle(cornerRadius: 8))
                         .onSubmit {
                             viewModel.addProject(addNewProjectText)
+                            selectedProject = addNewProjectText
                             addNewProjectText = ""
                             viewModel.getAllProject()
+                            
                             isRequestNewProject.toggle()
                         }
                         Image(systemName: addNewProjectText.count > 0 ? "plus" : "multiply")
@@ -74,7 +80,7 @@ struct PopoverTaskView: View {
                     }
                 )
                 : AnyView (
-                    Menu("Choose Project") {
+                    Menu(projects.count > 0 ? menuTitle1 : menuTitle2) {
                         ForEach(viewModel.allProjectList, id: \.self) { project in
                             Button(project) {
                                 self.selectedProject = project
@@ -126,7 +132,7 @@ struct PopoverTaskView: View {
                     self.hoveredItem = .feature
                     //                    showingList = featureItemList
 //                    featureItemList = viewModel.featureTaskList
-//                    showingList = viewModel.featureTaskList.map({ $0.task })
+                    showingList = viewModel.featureTaskList.map({ $0.task })
 //                    print("showingList: \(showingList)")
                 }
                 
@@ -222,7 +228,7 @@ struct PopoverTaskView: View {
                     .padding(.trailing, 8)
                     .onTapGesture {
                         // Item added
-                        viewModel.saveTask(selectedTask, addNewTaskText)
+                        projects.count > 0 ? viewModel.saveTask(selectedTask, addNewTaskText) : nil
                         addNewTaskText = ""
                     }
                 
