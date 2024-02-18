@@ -28,15 +28,18 @@ struct PopoverTaskView: View {
     @State var showingList: [String] = []
     @State private var hoveredItem: TaskType = .feature
     @State private var plusHoveredItem: Bool = false
+    @State private var isProjectExist: Bool = false
     @State var title: String = ""
     @State var selectedProject: String = "DevLog"
     @State var menuTitle1: String = "Choose Project"
-    @State var menuTitle2: String = "Add Project +"
+    @State var menuTitle2: String = "Add Project"
+    @State var taskTextFieldPlaceholder: String = "Add Task +"
     
     
     @StateObject var viewModel = PopoverViewModel()
     
     @FocusState private var focused: Bool
+    @FocusState private var focusedProject: Bool
     
     @State var shortString = true
     
@@ -62,7 +65,7 @@ struct PopoverTaskView: View {
                             
                         }
                         .frame(width: 150)
-                        .focused($focused)
+                        .focused($focusedProject)
                         .clipShape(RoundedRectangle(cornerRadius: 8))
                         .onSubmit {
                             viewModel.addProject(addNewProjectText)
@@ -92,6 +95,7 @@ struct PopoverTaskView: View {
                         Divider()
                         Button("Add New Project") {
                             isRequestNewProject.toggle()
+                            focusedProject.toggle()
                         }
                         .keyboardShortcut("N", modifiers: [.command])
                     }
@@ -206,6 +210,8 @@ struct PopoverTaskView: View {
             TextField("New Task", text: $addNewTaskText) { text in
                 
             }
+            
+            .foregroundStyle(isProjectExist ? .white : .red)
             .focused($focused)
             .clipShape(RoundedRectangle(cornerRadius: 8))
             .padding(.horizontal, 10)
@@ -249,7 +255,7 @@ struct PopoverTaskView: View {
         showingList.isEmpty ?
         AnyView(
             HStack(spacing: 5) {
-                Text("Task Eklenmedi")
+                Text(projects.count > 0 ? "Task Eklenmedi" : "Bir Proje Ekle")
                     .foregroundStyle(.white.opacity(0.5))
                     .font(.system(size: 18))
                 
