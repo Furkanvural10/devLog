@@ -11,6 +11,8 @@ enum TaskType: String {
 
 struct PopoverTaskView: View {
     
+    @State private var lastProject: String = UserDefaults.standard.string(forKey: "lastSelectedProject") ?? ""
+
     @State var isSelected = false
     @State private var isCompleted = false
     @State private var isRequestNewProject = false
@@ -30,7 +32,7 @@ struct PopoverTaskView: View {
     @State private var plusHoveredItem: Bool = false
     @State private var isProjectExist: Bool = false
     @State var title: String = ""
-    @State var selectedProject: String = "DevLog"
+    @State var selectedProject: String = "Welcome"
     @State var menuTitle1: String = "Choose Project"
     @State var menuTitle2: String = "Add Project"
     @State var taskTextFieldPlaceholder: String = "Add Task +"
@@ -45,6 +47,8 @@ struct PopoverTaskView: View {
     
     
     var body: some View {
+        
+        
         VStack(spacing: 5) {
             HStack {
                 Text(shortString ? "Welcome" : selectedProject)
@@ -52,8 +56,12 @@ struct PopoverTaskView: View {
                     .font(.title2)
                     .padding()
                     .onAppear {
+                        print("Selected project: \(selectedProject)")
+                        selectedProject = lastProject
                         viewModel.getAllProject()
                         viewModel.getFeatureTask(taskType: .feature, projectName: selectedProject)
+                        viewModel.allProjectList.count > 0 ? isProjectExist.toggle() : nil
+                        
                         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                             shortString.toggle()
                         }
@@ -88,6 +96,8 @@ struct PopoverTaskView: View {
                             Button(project) {
                                 self.selectedProject = project
                                 print("\(project) Tab")
+                                // TODO: - Son seçilen uygulamayı userdefaults'a kaydet
+                                viewModel.saveLastSelectedProject(projectName: self.selectedProject)
                             }
                             .keyboardShortcut(.init(project.first!))
                             
@@ -102,7 +112,7 @@ struct PopoverTaskView: View {
                         .frame(width: 135, height: 20)
                         .padding()
                         .cornerRadius(5)
-                        .opacity(!shortString ? 0.5 : 0)
+                        .opacity(!shortString ? 0.9 : 0)
                     
                 )
             }
@@ -132,12 +142,13 @@ struct PopoverTaskView: View {
                     }
                 })
                 .onTapGesture {
+                    print("Feature tıklandı")
                     self.selectedTask = .feature
                     self.hoveredItem = .feature
                     //                    showingList = featureItemList
-//                    featureItemList = viewModel.featureTaskList
+                    //                    featureItemList = viewModel.featureTaskList
                     showingList = viewModel.featureTaskList.map({ $0.task })
-//                    print("showingList: \(showingList)")
+                    //                    print("showingList: \(showingList)")
                 }
                 
                 
@@ -164,11 +175,11 @@ struct PopoverTaskView: View {
                     }
                 })
                 .onTapGesture {
-                    
+                    print("Bug tıklandı")
                     self.selectedTask = .bug
                     self.hoveredItem = .bug
-//                    bugItemList = viewModel.bugTaskList
-//                    showingList = bugItemList.map({ $0.task })
+                    //                    bugItemList = viewModel.bugTaskList
+                    //                    showingList = bugItemList.map({ $0.task })
                 }
                 
                 ZStack {
@@ -195,12 +206,12 @@ struct PopoverTaskView: View {
                     }
                 })
                 .onTapGesture {
-                    print("Bugs Tıklandı")
-//                    self.viewModel.getTask(taskType: .bug, projectName: selectedProject)
+                    print("Daily Tıklandı")
+                    //                    self.viewModel.getTask(taskType: .bug, projectName: selectedProject)
                     self.selectedTask = .daily
                     self.hoveredItem = .daily
-//                    dailyItemList = viewModel.dailyTaskList
-//                    showingList = dailyItemList.map({ $0.task })
+                    //                    dailyItemList = viewModel.dailyTaskList
+                    //                    showingList = dailyItemList.map({ $0.task })
                 }
             }
         }
@@ -210,11 +221,10 @@ struct PopoverTaskView: View {
             TextField("New Task", text: $addNewTaskText) { text in
                 
             }
-            
-            .foregroundStyle(isProjectExist ? .white : .red)
             .focused($focused)
             .clipShape(RoundedRectangle(cornerRadius: 8))
             .padding(.horizontal, 10)
+            
             .onAppear {
                 DispatchQueue.main.asyncAfter(deadline: .now()) {
                     self.focused = false
@@ -255,7 +265,7 @@ struct PopoverTaskView: View {
         showingList.isEmpty ?
         AnyView(
             HStack(spacing: 5) {
-                Text(projects.count > 0 ? "Task Eklenmedi" : "Bir Proje Ekle")
+                Text("Task Eklenmedi")
                     .foregroundStyle(.white.opacity(0.5))
                     .font(.system(size: 18))
                 

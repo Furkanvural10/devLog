@@ -17,9 +17,13 @@ final class PopoverViewModel: ObservableObject {
     @Published var dailyTaskList = [DailyTask]()
     @Published var allProjectList = [String]()
     @Published var errorMessage = ""
+    @Published var lastSelectedProject = ""
     
     private let database = Firestore.firestore()
     private let userID = Auth.auth().currentUser?.uid
+    
+    
+
     
     init() {}
     
@@ -118,6 +122,14 @@ final class PopoverViewModel: ObservableObject {
                 
             }
         }
+    }
+    
+    func saveLastSelectedProject(projectName: String) {
+        UserDefaults.standard.set(projectName, forKey: "lastSelectedProject")
+    }
+    
+    func getLastSelectedProject() {
+        
     }
 }
 
