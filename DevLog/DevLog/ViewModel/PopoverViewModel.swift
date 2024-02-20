@@ -47,12 +47,14 @@ final class PopoverViewModel: ObservableObject {
     func getFeatureTask(taskType: TaskType, projectName: String) {
         
         GetTask.shared.getFeatureTask(taskType: taskType, projectName: projectName) { result in
+            
             switch result {
             case .success(let success):
                 self.featureTaskList = success
+                
             case .failure(let failure):
                 self.errorMessage = failure.localizedDescription
-                print("ERROR! \(failure.localizedDescription)")
+                
             }
         }
     }
@@ -62,8 +64,10 @@ final class PopoverViewModel: ObservableObject {
             switch result {
             case .success(let success):
                 self.bugTaskList = success
+                print("BUG TASK: \(success)")
             case .failure(let failure):
                 self.errorMessage = failure.localizedDescription
+                print("HATA MESAJI : \(failure.localizedDescription)")
             }
         }
     }

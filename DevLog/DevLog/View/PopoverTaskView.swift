@@ -4,9 +4,9 @@ import SwiftUI
 import FirebaseFirestore
 
 enum TaskType: String {
-    case feature
-    case bug
-    case daily
+    case feature = "Feature"
+    case bug = "Bug"
+    case daily = "Daily"
 }
 
 struct PopoverTaskView: View {
@@ -60,8 +60,9 @@ struct PopoverTaskView: View {
                         selectedProject = lastProject
                         viewModel.getAllProject()
                         viewModel.getFeatureTask(taskType: .feature, projectName: selectedProject)
+//                        viewModel.getFeatureTask(taskType: .feature, projectName: lastProject)
+                        // TODO: - ViewModel
                         viewModel.allProjectList.count > 0 ? isProjectExist.toggle() : nil
-                        
                         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                             shortString.toggle()
                         }
@@ -91,7 +92,7 @@ struct PopoverTaskView: View {
                     }
                 )
                 : AnyView (
-                    Menu(projects.count > 0 ? menuTitle1 : menuTitle2) {
+                    Menu("Select Project") {
                         ForEach(viewModel.allProjectList, id: \.self) { project in
                             Button(project) {
                                 self.selectedProject = project
@@ -145,6 +146,7 @@ struct PopoverTaskView: View {
                     print("Feature tıklandı")
                     self.selectedTask = .feature
                     self.hoveredItem = .feature
+                    viewModel.getFeatureTask(taskType: .feature, projectName: selectedProject)
                     //                    showingList = featureItemList
                     //                    featureItemList = viewModel.featureTaskList
                     showingList = viewModel.featureTaskList.map({ $0.task })
@@ -178,8 +180,9 @@ struct PopoverTaskView: View {
                     print("Bug tıklandı")
                     self.selectedTask = .bug
                     self.hoveredItem = .bug
-                    //                    bugItemList = viewModel.bugTaskList
-                    //                    showingList = bugItemList.map({ $0.task })
+                    
+                    bugItemList = viewModel.bugTaskList
+                    showingList = bugItemList.map({ $0.task })
                 }
                 
                 ZStack {
