@@ -50,7 +50,9 @@ final class PopoverViewModel: ObservableObject {
             
             switch result {
             case .success(let success):
-                self.featureTaskList = success
+//                self.featureTaskList = success
+                print(success)
+                self.featureTaskList.append(success)
                 
             case .failure(let failure):
                 self.errorMessage = failure.localizedDescription

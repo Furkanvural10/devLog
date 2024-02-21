@@ -12,7 +12,7 @@ final class GetTask {
     static let shared = GetTask()
     private init() {}
     
-    func getFeatureTask(taskType: TaskType, projectName: String, completion: @escaping (Result<[FeatureTask], Error>) -> Void) {
+    func getFeatureTask(taskType: TaskType, projectName: String, completion: @escaping (Result<FeatureTask, Error>) -> Void) {
         
         FirebaseManager.shared.getTask(taskType: taskType, projectName: projectName, completion: completion)
     }

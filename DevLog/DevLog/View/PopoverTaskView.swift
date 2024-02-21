@@ -61,6 +61,7 @@ struct PopoverTaskView: View {
                         viewModel.getAllProject()
                         viewModel.getFeatureTask(taskType: .feature, projectName: selectedProject)
 //                        viewModel.getFeatureTask(taskType: .feature, projectName: lastProject)
+                        showingList = viewModel.featureTaskList.map({ $0.task })
                         // TODO: - ViewModel
                         viewModel.allProjectList.count > 0 ? isProjectExist.toggle() : nil
                         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {

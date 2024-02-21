@@ -9,9 +9,7 @@ protocol FirebaseManagerProtocol {
 
 
 final class FirebaseManager: FirebaseManagerProtocol {
-    
-    
-    
+
     static let shared = FirebaseManager()
     private var userID = ""
     private var database = Firestore.firestore()
@@ -43,22 +41,17 @@ final class FirebaseManager: FirebaseManagerProtocol {
         database.collection("users").document(id).collection("Project").document(projectName).collection(taskType.rawValue).addSnapshotListener { snapshot, error in
             
             guard error == nil else {
-                
                 completion(.failure(error!))
                 return
             }
             guard let snapshot = snapshot else {
-                
                 completion(.failure(error!))
                 return
             }
             
             for document in snapshot.documents {
-                
                 do {
-                    
                     let product = try document.data(as: T.self)
-                    
                     completion(.success(product))
                 }
                 catch {

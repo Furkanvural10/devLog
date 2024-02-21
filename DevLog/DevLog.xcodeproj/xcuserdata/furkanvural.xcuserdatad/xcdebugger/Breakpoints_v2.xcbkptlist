@@ -7,132 +7,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "4B2B6128-A113-4093-99D2-D16EB389F6B8"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "DevLog/Service/FirebaseManager.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "57"
-            endingLineNumber = "57"
-            landmarkName = "getTask(taskType:projectName:completion:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "4B2B6128-A113-4093-99D2-D16EB389F6B8 - 6459118cdb55b302"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Swift.Optional&lt;__C.FIRQuerySnapshot&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in DevLog.FirebaseManager.getTask&lt;&#x3c4;_0_0 where &#x3c4;_0_0: Swift.Decodable, &#x3c4;_0_0: Swift.Encodable&gt;(taskType: DevLog.TaskType, projectName: Swift.String, completion: (Swift.Result&lt;&#x3c4;_0_0, Swift.Error&gt;) -&gt; ()) -&gt; ()"
-                  moduleName = "DevLog"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/furkanvural/Desktop/devLog/devLog/DevLog/DevLog/Service/FirebaseManager.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "58"
-                  endingLineNumber = "58"
-                  offsetFromSymbolStart = "1448">
-               </Location>
-               <Location
-                  uuid = "4B2B6128-A113-4093-99D2-D16EB389F6B8 - 6459118cdb55b321"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Swift.Optional&lt;__C.FIRQuerySnapshot&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in DevLog.FirebaseManager.getTask&lt;&#x3c4;_0_0 where &#x3c4;_0_0: Swift.Decodable, &#x3c4;_0_0: Swift.Encodable&gt;(taskType: DevLog.TaskType, projectName: Swift.String, completion: (Swift.Result&lt;&#x3c4;_0_0, Swift.Error&gt;) -&gt; ()) -&gt; ()"
-                  moduleName = "DevLog"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/furkanvural/Desktop/devLog/devLog/DevLog/DevLog/Service/FirebaseManager.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "59"
-                  endingLineNumber = "59"
-                  offsetFromSymbolStart = "1448">
-               </Location>
-               <Location
-                  uuid = "4B2B6128-A113-4093-99D2-D16EB389F6B8 - 6459118cdb55b321"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Swift.Optional&lt;__C.FIRQuerySnapshot&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in DevLog.FirebaseManager.getTask&lt;&#x3c4;_0_0 where &#x3c4;_0_0: Swift.Decodable, &#x3c4;_0_0: Swift.Encodable&gt;(taskType: DevLog.TaskType, projectName: Swift.String, completion: (Swift.Result&lt;&#x3c4;_0_0, Swift.Error&gt;) -&gt; ()) -&gt; ()"
-                  moduleName = "DevLog"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/furkanvural/Desktop/devLog/devLog/DevLog/DevLog/Service/FirebaseManager.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "59"
-                  endingLineNumber = "59"
-                  offsetFromSymbolStart = "1852">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "77E04002-B45E-4FC4-BB1A-084D8D100D04"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "DevLog/Service/FirebaseManager.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "59"
-            endingLineNumber = "59"
-            landmarkName = "getTask(taskType:projectName:completion:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "77E04002-B45E-4FC4-BB1A-084D8D100D04 - 6459118cdb55b321"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Swift.Optional&lt;__C.FIRQuerySnapshot&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in DevLog.FirebaseManager.getTask&lt;&#x3c4;_0_0 where &#x3c4;_0_0: Swift.Decodable, &#x3c4;_0_0: Swift.Encodable&gt;(taskType: DevLog.TaskType, projectName: Swift.String, completion: (Swift.Result&lt;&#x3c4;_0_0, Swift.Error&gt;) -&gt; ()) -&gt; ()"
-                  moduleName = "DevLog"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/furkanvural/Desktop/devLog/devLog/DevLog/DevLog/Service/FirebaseManager.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "59"
-                  endingLineNumber = "59"
-                  offsetFromSymbolStart = "1636">
-               </Location>
-               <Location
-                  uuid = "77E04002-B45E-4FC4-BB1A-084D8D100D04 - 6459118cdb55b321"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Swift.Optional&lt;__C.FIRQuerySnapshot&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in DevLog.FirebaseManager.getTask&lt;&#x3c4;_0_0 where &#x3c4;_0_0: Swift.Decodable, &#x3c4;_0_0: Swift.Encodable&gt;(taskType: DevLog.TaskType, projectName: Swift.String, completion: (Swift.Result&lt;&#x3c4;_0_0, Swift.Error&gt;) -&gt; ()) -&gt; ()"
-                  moduleName = "DevLog"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/furkanvural/Desktop/devLog/devLog/DevLog/DevLog/Service/FirebaseManager.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "59"
-                  endingLineNumber = "59"
-                  offsetFromSymbolStart = "1448">
-               </Location>
-               <Location
-                  uuid = "77E04002-B45E-4FC4-BB1A-084D8D100D04 - 6459118cdb55b321"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Swift.Optional&lt;__C.FIRQuerySnapshot&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in DevLog.FirebaseManager.getTask&lt;&#x3c4;_0_0 where &#x3c4;_0_0: Swift.Decodable, &#x3c4;_0_0: Swift.Encodable&gt;(taskType: DevLog.TaskType, projectName: Swift.String, completion: (Swift.Result&lt;&#x3c4;_0_0, Swift.Error&gt;) -&gt; ()) -&gt; ()"
-                  moduleName = "DevLog"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/furkanvural/Desktop/devLog/devLog/DevLog/DevLog/Service/FirebaseManager.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "59"
-                  endingLineNumber = "59"
-                  offsetFromSymbolStart = "1852">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "C8301461-4938-45C7-9B63-795653846226"
             shouldBeEnabled = "No"
             ignoreCount = "0"
@@ -140,8 +14,8 @@
             filePath = "DevLog/Service/FirebaseManager.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "60"
-            endingLineNumber = "60"
+            startingLineNumber = "54"
+            endingLineNumber = "54"
             landmarkName = "getTask(taskType:projectName:completion:)"
             landmarkType = "7">
             <Locations>
@@ -196,69 +70,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "B0A66F72-6DA7-4023-82DD-D751E8B6E5AE"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "DevLog/Service/FirebaseManager.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "61"
-            endingLineNumber = "61"
-            landmarkName = "getTask(taskType:projectName:completion:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "B0A66F72-6DA7-4023-82DD-D751E8B6E5AE - 6459118cdb55b39f"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Swift.Optional&lt;__C.FIRQuerySnapshot&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in DevLog.FirebaseManager.getTask&lt;&#x3c4;_0_0 where &#x3c4;_0_0: Swift.Decodable, &#x3c4;_0_0: Swift.Encodable&gt;(taskType: DevLog.TaskType, projectName: Swift.String, completion: (Swift.Result&lt;&#x3c4;_0_0, Swift.Error&gt;) -&gt; ()) -&gt; ()"
-                  moduleName = "DevLog"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/furkanvural/Desktop/devLog/devLog/DevLog/DevLog/Service/FirebaseManager.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "61"
-                  endingLineNumber = "61"
-                  offsetFromSymbolStart = "1992">
-               </Location>
-               <Location
-                  uuid = "B0A66F72-6DA7-4023-82DD-D751E8B6E5AE - 6459118cdb55b39f"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Swift.Optional&lt;__C.FIRQuerySnapshot&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in DevLog.FirebaseManager.getTask&lt;&#x3c4;_0_0 where &#x3c4;_0_0: Swift.Decodable, &#x3c4;_0_0: Swift.Encodable&gt;(taskType: DevLog.TaskType, projectName: Swift.String, completion: (Swift.Result&lt;&#x3c4;_0_0, Swift.Error&gt;) -&gt; ()) -&gt; ()"
-                  moduleName = "DevLog"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/furkanvural/Desktop/devLog/devLog/DevLog/DevLog/Service/FirebaseManager.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "61"
-                  endingLineNumber = "61"
-                  offsetFromSymbolStart = "1816">
-               </Location>
-               <Location
-                  uuid = "B0A66F72-6DA7-4023-82DD-D751E8B6E5AE - 6459118cdb55b39f"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Swift.Optional&lt;__C.FIRQuerySnapshot&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in DevLog.FirebaseManager.getTask&lt;&#x3c4;_0_0 where &#x3c4;_0_0: Swift.Decodable, &#x3c4;_0_0: Swift.Encodable&gt;(taskType: DevLog.TaskType, projectName: Swift.String, completion: (Swift.Result&lt;&#x3c4;_0_0, Swift.Error&gt;) -&gt; ()) -&gt; ()"
-                  moduleName = "DevLog"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/furkanvural/Desktop/devLog/devLog/DevLog/DevLog/Service/FirebaseManager.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "61"
-                  endingLineNumber = "61"
-                  offsetFromSymbolStart = "2236">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "3BE9E1B2-D2DB-40BD-A575-EFD8B92BEB94"
             shouldBeEnabled = "No"
             ignoreCount = "0"
@@ -266,8 +77,8 @@
             filePath = "DevLog/Service/FirebaseManager.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "62"
-            endingLineNumber = "62"
+            startingLineNumber = "55"
+            endingLineNumber = "55"
             landmarkName = "getTask(taskType:projectName:completion:)"
             landmarkType = "7">
             <Locations>
@@ -329,8 +140,8 @@
             filePath = "DevLog/Service/FirebaseManager.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "64"
-            endingLineNumber = "64"
+            startingLineNumber = "57"
+            endingLineNumber = "57"
             landmarkName = "getTask(taskType:projectName:completion:)"
             landmarkType = "7">
             <Locations>
@@ -386,14 +197,14 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "9EC6F27D-F621-4001-AB90-A29A5C8D63A3"
-            shouldBeEnabled = "No"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "DevLog/Service/FirebaseManager.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "65"
-            endingLineNumber = "65"
+            startingLineNumber = "58"
+            endingLineNumber = "58"
             landmarkName = "getTask(taskType:projectName:completion:)"
             landmarkType = "7">
             <Locations>
@@ -441,6 +252,36 @@
                   startingLineNumber = "65"
                   endingLineNumber = "65"
                   offsetFromSymbolStart = "3388">
+               </Location>
+               <Location
+                  uuid = "9EC6F27D-F621-4001-AB90-A29A5C8D63A3 - 6459118cdb55b3c0"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Optional&lt;__C.FIRQuerySnapshot&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in DevLog.FirebaseManager.getTask&lt;&#x3c4;_0_0 where &#x3c4;_0_0: Swift.Decodable, &#x3c4;_0_0: Swift.Encodable&gt;(taskType: DevLog.TaskType, projectName: Swift.String, completion: (Swift.Result&lt;&#x3c4;_0_0, Swift.Error&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "DevLog"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/furkanvural/Desktop/devLog/devLog/DevLog/DevLog/Service/FirebaseManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "60"
+                  endingLineNumber = "60"
+                  offsetFromSymbolStart = "916">
+               </Location>
+               <Location
+                  uuid = "9EC6F27D-F621-4001-AB90-A29A5C8D63A3 - 6459118cdb55b302"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Optional&lt;__C.FIRQuerySnapshot&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in DevLog.FirebaseManager.getTask&lt;&#x3c4;_0_0 where &#x3c4;_0_0: Swift.Decodable, &#x3c4;_0_0: Swift.Encodable&gt;(taskType: DevLog.TaskType, projectName: Swift.String, completion: (Swift.Result&lt;&#x3c4;_0_0, Swift.Error&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "DevLog"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/furkanvural/Desktop/devLog/devLog/DevLog/DevLog/Service/FirebaseManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "58"
+                  endingLineNumber = "58"
+                  offsetFromSymbolStart = "1724">
                </Location>
             </Locations>
          </BreakpointContent>
