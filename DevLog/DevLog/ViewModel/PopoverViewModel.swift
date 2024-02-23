@@ -51,7 +51,7 @@ final class PopoverViewModel: ObservableObject {
             switch result {
             case .success(let success):
 //                self.featureTaskList = success
-                print(success)
+                self.featureTaskList.removeAll(keepingCapacity: false)
                 self.featureTaskList.append(success)
                 
             case .failure(let failure):
@@ -65,8 +65,9 @@ final class PopoverViewModel: ObservableObject {
         GetTask.shared.getBugTask(taskType: taskType, projectName: projectName) { result in
             switch result {
             case .success(let success):
-                self.bugTaskList = success
-                print("BUG TASK: \(success)")
+                self.bugTaskList.removeAll(keepingCapacity: false)
+                self.bugTaskList.append(success)
+                
             case .failure(let failure):
                 self.errorMessage = failure.localizedDescription
                 print("HATA MESAJI : \(failure.localizedDescription)")

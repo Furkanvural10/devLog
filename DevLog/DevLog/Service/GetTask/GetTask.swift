@@ -17,7 +17,7 @@ final class GetTask {
         FirebaseManager.shared.getTask(taskType: taskType, projectName: projectName, completion: completion)
     }
     
-    func getBugTask(taskType: TaskType, projectName: String, completion: @escaping (Result<[BugTask], Error>) -> Void) {
+    func getBugTask(taskType: TaskType, projectName: String, completion: @escaping (Result<BugTask, Error>) -> Void) {
         FirebaseManager.shared.getTask(taskType: taskType, projectName: projectName, completion: completion)
     }
     

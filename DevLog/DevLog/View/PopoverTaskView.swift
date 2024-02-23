@@ -56,16 +56,16 @@ struct PopoverTaskView: View {
                     .font(.title2)
                     .padding()
                     .onAppear {
-                        print("Selected project: \(selectedProject)")
                         selectedProject = lastProject
                         viewModel.getAllProject()
                         viewModel.getFeatureTask(taskType: .feature, projectName: selectedProject)
-//                        viewModel.getFeatureTask(taskType: .feature, projectName: lastProject)
-                        showingList = viewModel.featureTaskList.map({ $0.task })
+                        viewModel.getBugTask(taskType: .bug, projectName: selectedProject)
+                        
                         // TODO: - ViewModel
                         viewModel.allProjectList.count > 0 ? isProjectExist.toggle() : nil
                         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                             shortString.toggle()
+                            showingList = viewModel.featureTaskList.map({ $0.task })
                         }
                     }
                 Spacer()
@@ -144,14 +144,9 @@ struct PopoverTaskView: View {
                     }
                 })
                 .onTapGesture {
-                    print("Feature tıklandı")
                     self.selectedTask = .feature
                     self.hoveredItem = .feature
-                    viewModel.getFeatureTask(taskType: .feature, projectName: selectedProject)
-                    //                    showingList = featureItemList
-                    //                    featureItemList = viewModel.featureTaskList
                     showingList = viewModel.featureTaskList.map({ $0.task })
-                    //                    print("showingList: \(showingList)")
                 }
                 
                 
@@ -184,6 +179,7 @@ struct PopoverTaskView: View {
                     
                     bugItemList = viewModel.bugTaskList
                     showingList = bugItemList.map({ $0.task })
+                    print("Showing list: \(showingList)")
                 }
                 
                 ZStack {
@@ -260,7 +256,7 @@ struct PopoverTaskView: View {
                 case false:
                     plusHoveredItem.toggle()
                 }
-                
+
             }
         }
         .padding(8)
