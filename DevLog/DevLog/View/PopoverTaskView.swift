@@ -32,10 +32,10 @@ struct PopoverTaskView: View {
     @State private var plusHoveredItem: Bool = false
     @State private var isProjectExist: Bool = false
     @State var title: String = ""
-    @State var selectedProject: String = "Welcome"
-    @State var menuTitle1: String = "Choose Project"
-    @State var menuTitle2: String = "Add Project"
-    @State var taskTextFieldPlaceholder: String = "Add Task +"
+    @State var selectedProject: String = StringConstant.welcomeText
+    @State var menuTitle1: String = StringConstant.menuTitle1Text
+    @State var menuTitle2: String = StringConstant.menuTitle2Text
+    @State var taskTextFieldPlaceholder: String = StringConstant.taskTextFieldPlaceholderText
     
     
     @StateObject var viewModel = PopoverViewModel()
@@ -51,7 +51,7 @@ struct PopoverTaskView: View {
         
         VStack(spacing: 5) {
             HStack {
-                Text(shortString ? "Welcome" : selectedProject)
+                Text(shortString ? StringConstant.welcomeText : selectedProject)
                     .animation(.easeInOut(duration: 0.6))
                     .font(.title2)
                     .padding()
@@ -71,7 +71,7 @@ struct PopoverTaskView: View {
                 Spacer()
                 isRequestNewProject ? AnyView(
                     HStack {
-                        TextField("New Project", text: $addNewProjectText) { text in
+                        TextField(StringConstant.newProjectText, text: $addNewProjectText) { text in
                             
                         }
                         .frame(width: 150)
@@ -93,7 +93,7 @@ struct PopoverTaskView: View {
                     }
                 )
                 : AnyView (
-                    Menu("Select Project") {
+                    Menu(StringConstant.selectProjectText) {
                         ForEach(viewModel.allProjectList, id: \.self) { project in
                             Button(project) {
                                 self.selectedProject = project
@@ -105,7 +105,7 @@ struct PopoverTaskView: View {
                             
                         }
                         Divider()
-                        Button("Add New Project") {
+                        Button(StringConstant.addNewProjectText) {
                             isRequestNewProject.toggle()
                             focusedProject.toggle()
                         }
@@ -173,13 +173,10 @@ struct PopoverTaskView: View {
                     }
                 })
                 .onTapGesture {
-                    print("Bug tıklandı")
                     self.selectedTask = .bug
                     self.hoveredItem = .bug
-                    
                     bugItemList = viewModel.bugTaskList
                     showingList = bugItemList.map({ $0.task })
-                    print("Showing list: \(showingList)")
                 }
                 
                 ZStack {
@@ -206,7 +203,7 @@ struct PopoverTaskView: View {
                     }
                 })
                 .onTapGesture {
-                    print("Daily Tıklandı")
+                    
                     //                    self.viewModel.getTask(taskType: .bug, projectName: selectedProject)
                     self.selectedTask = .daily
                     self.hoveredItem = .daily
@@ -218,7 +215,7 @@ struct PopoverTaskView: View {
         
         
         HStack {
-            TextField("New Task", text: $addNewTaskText) { text in
+            TextField(StringConstant.newTaskText, text: $addNewTaskText) { text in
                 
             }
             .focused($focused)
@@ -265,7 +262,7 @@ struct PopoverTaskView: View {
         showingList.isEmpty ?
         AnyView(
             HStack(spacing: 5) {
-                Text("Task Eklenmedi")
+                Text(StringConstant.notAddedTaskText)
                     .foregroundStyle(.white.opacity(0.5))
                     .font(.system(size: 18))
                 
@@ -290,7 +287,7 @@ struct PopoverTaskView: View {
                             Text(item)
                                 .strikethrough(isCompleted, color: .gray)
                                 .contextMenu {
-                                    Button("Delete") {
+                                    Button(StringConstant.deleteButtonText) {
                                         if let index = showingList.firstIndex(of: item) {
                                             showingList.remove(at: index)
                                         }
