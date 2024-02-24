@@ -21,7 +21,7 @@ final class GetTask {
         FirebaseManager.shared.getTask(taskType: taskType, projectName: projectName, completion: completion)
     }
     
-    func getDailyTask(taskType: TaskType, projectName: String, completion: @escaping (Result<[DailyTask], NetworkError>) -> Void) {
+    func getDailyTask(taskType: TaskType, completion: @escaping (Result<DailyTask, NetworkError>) -> Void) {
         FirebaseManager.shared.getData(completion: completion)
     }
 }

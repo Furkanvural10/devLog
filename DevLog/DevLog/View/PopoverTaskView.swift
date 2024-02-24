@@ -60,6 +60,7 @@ struct PopoverTaskView: View {
                         viewModel.getAllProject()
                         viewModel.getFeatureTask(taskType: .feature, projectName: selectedProject)
                         viewModel.getBugTask(taskType: .bug, projectName: selectedProject)
+                        viewModel.getDailyTask(taskType: .daily)
                         
                         // TODO: - ViewModel
                         viewModel.allProjectList.count > 0 ? isProjectExist.toggle() : nil
@@ -100,6 +101,7 @@ struct PopoverTaskView: View {
                                 print("\(project) Tab")
                                 // TODO: - Son seçilen uygulamayı userdefaults'a kaydet
                                 viewModel.saveLastSelectedProject(projectName: self.selectedProject)
+                                
                             }
                             .keyboardShortcut(.init(project.first!))
                             
@@ -208,7 +210,8 @@ struct PopoverTaskView: View {
                     self.selectedTask = .daily
                     self.hoveredItem = .daily
                     //                    dailyItemList = viewModel.dailyTaskList
-                    //                    showingList = dailyItemList.map({ $0.task })
+                    showingList = viewModel.dailyTaskList.map({ $0.task })
+                    
                 }
             }
         }

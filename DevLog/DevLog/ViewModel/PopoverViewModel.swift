@@ -46,49 +46,48 @@ final class PopoverViewModel: ObservableObject {
     
     func getFeatureTask(taskType: TaskType, projectName: String) {
         
+        self.featureTaskList.removeAll(keepingCapacity: false)
         GetTask.shared.getFeatureTask(taskType: taskType, projectName: projectName) { result in
-            
             switch result {
             case .success(let success):
-//                self.featureTaskList = success
-                self.featureTaskList.removeAll(keepingCapacity: false)
                 self.featureTaskList.append(success)
-                
             case .failure(let failure):
                 self.errorMessage = failure.localizedDescription
-                
             }
         }
     }
     
     func getBugTask(taskType: TaskType, projectName: String) {
+        
+        self.bugTaskList.removeAll(keepingCapacity: false)
         GetTask.shared.getBugTask(taskType: taskType, projectName: projectName) { result in
             switch result {
             case .success(let success):
-                self.bugTaskList.removeAll(keepingCapacity: false)
                 self.bugTaskList.append(success)
-                
             case .failure(let failure):
                 self.errorMessage = failure.localizedDescription
-                print("HATA MESAJI : \(failure.localizedDescription)")
             }
         }
     }
     
-    func getDailyTask(taskType: TaskType, projectName: String) {
-        GetTask.shared.getDailyTask(taskType: taskType, projectName: projectName) { result in
+    func getDailyTask(taskType: TaskType) {
+        
+        self.dailyTaskList.removeAll(keepingCapacity: false)
+        GetTask.shared.getDailyTask(taskType: taskType) { result in
             switch result {
             case .success(let success):
-                self.dailyTaskList = success
+                self.dailyTaskList.append(success)
+                print("DATA ALINDI BAŞARIYLA")
             case .failure(let failure):
                 self.errorMessage = failure.localizedDescription
+                print("FAİLUREEE: \(failure)")
             }
         }
     }
     
     func saveTask(_ taskItem: TaskType, _ taskText: String) {
+        
         guard let userID else { return }
-
         switch taskItem {
         case .feature: 
             let taskReference = database.collection("user").document(userID).collection("FeatureTask")

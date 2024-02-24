@@ -66,7 +66,7 @@ final class FirebaseManager: FirebaseManagerProtocol {
         
         guard let id = Auth.auth().currentUser?.uid else { return }
         let database = Firestore.firestore()
-        database.collection("daily").addSnapshotListener { snapshot, error in
+        database.collection("daily").document("D3KZECwR6lIAnUN8TXaC").collection("Daily").addSnapshotListener { snapshot, error in
             guard error == nil else {
                 print("Data error")
                 completion(.failure(.dataError))
