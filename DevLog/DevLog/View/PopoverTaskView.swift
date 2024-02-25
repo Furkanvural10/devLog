@@ -98,10 +98,17 @@ struct PopoverTaskView: View {
                         ForEach(viewModel.allProjectList, id: \.self) { project in
                             Button(project) {
                                 self.selectedProject = project
-                                print("\(project) Tab")
+                                
                                 // TODO: - Son seçilen uygulamayı userdefaults'a kaydet
                                 viewModel.saveLastSelectedProject(projectName: self.selectedProject)
-                                
+                                viewModel.getFeatureTask(taskType: .feature, projectName: project)
+                                viewModel.getBugTask(taskType: .bug, projectName: project)
+                                self.selectedTask = .feature
+                                self.hoveredItem = .feature
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                                    self.showingList = viewModel.featureTaskList.map({ $0.task })
+                                }
+
                             }
                             .keyboardShortcut(.init(project.first!))
                             
@@ -205,13 +212,9 @@ struct PopoverTaskView: View {
                     }
                 })
                 .onTapGesture {
-                    
-                    //                    self.viewModel.getTask(taskType: .bug, projectName: selectedProject)
                     self.selectedTask = .daily
                     self.hoveredItem = .daily
-                    //                    dailyItemList = viewModel.dailyTaskList
                     showingList = viewModel.dailyTaskList.map({ $0.task })
-                    
                 }
             }
         }
