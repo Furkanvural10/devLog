@@ -18,26 +18,23 @@ final class PopoverViewModel: ObservableObject {
     @Published var allProjectList = [String]()
     @Published var errorMessage = ""
     @Published var lastSelectedProject = ""
+    @Published var showingList = [String]()
     
     private let database = Firestore.firestore()
     private let userID = Auth.auth().currentUser?.uid
     
     
-
-    
     init() {}
     
     func getAllProject() {
+        
         allProjectList.removeAll(keepingCapacity: false)
-        
         guard let userID else { return }
-        
         let projectsRef = database.collection("users").document(userID).collection("Project")
         
         projectsRef.getDocuments { (querySnapshot, error) in
             guard error == nil else { return }
             for document in querySnapshot!.documents {
-                print("\(document.documentID)")
                 self.allProjectList.append(document.documentID)
             }
         }
@@ -46,11 +43,14 @@ final class PopoverViewModel: ObservableObject {
     
     func getFeatureTask(taskType: TaskType, projectName: String) {
         
-        self.featureTaskList.removeAll(keepingCapacity: false)
+//        self.featureTaskList.removeAll(keepingCapacity: false)
+        
         GetTask.shared.getFeatureTask(taskType: taskType, projectName: projectName) { result in
+            self.showingList.removeAll(keepingCapacity: false)
             switch result {
             case .success(let success):
-                self.featureTaskList.append(success)
+//                self.featureTaskList.append(success)
+                self.showingList.append(success.task)
             case .failure(let failure):
                 self.errorMessage = failure.localizedDescription
             }
@@ -60,10 +60,13 @@ final class PopoverViewModel: ObservableObject {
     func getBugTask(taskType: TaskType, projectName: String) {
         
         self.bugTaskList.removeAll(keepingCapacity: false)
+        
         GetTask.shared.getBugTask(taskType: taskType, projectName: projectName) { result in
+            self.showingList.removeAll(keepingCapacity: false)
             switch result {
             case .success(let success):
                 self.bugTaskList.append(success)
+                self.showingList = self.bugTaskList.map({ $0.task })
             case .failure(let failure):
                 self.errorMessage = failure.localizedDescription
             }
@@ -73,14 +76,15 @@ final class PopoverViewModel: ObservableObject {
     func getDailyTask(taskType: TaskType) {
         
         self.dailyTaskList.removeAll(keepingCapacity: false)
+        
         GetTask.shared.getDailyTask(taskType: taskType) { result in
+            self.showingList.removeAll(keepingCapacity: false)
             switch result {
             case .success(let success):
                 self.dailyTaskList.append(success)
-                print("DATA ALINDI BAŞARIYLA")
+                self.showingList = self.dailyTaskList.map({ $0.task })
             case .failure(let failure):
                 self.errorMessage = failure.localizedDescription
-                print("FAİLUREEE: \(failure)")
             }
         }
     }

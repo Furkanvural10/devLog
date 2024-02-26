@@ -58,16 +58,14 @@ struct PopoverTaskView: View {
                     .onAppear {
                         selectedProject = lastProject
                         viewModel.getAllProject()
-                        viewModel.getFeatureTask(taskType: .feature, projectName: selectedProject)
-                        viewModel.getBugTask(taskType: .bug, projectName: selectedProject)
-                        viewModel.getDailyTask(taskType: .daily)
                         
                         // TODO: - ViewModel
                         viewModel.allProjectList.count > 0 ? isProjectExist.toggle() : nil
                         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                             shortString.toggle()
-                            showingList = viewModel.featureTaskList.map({ $0.task })
+                            
                         }
+                        viewModel.getFeatureTask(taskType: .feature, projectName: selectedProject)
                     }
                 Spacer()
                 isRequestNewProject ? AnyView(
@@ -155,7 +153,7 @@ struct PopoverTaskView: View {
                 .onTapGesture {
                     self.selectedTask = .feature
                     self.hoveredItem = .feature
-                    showingList = viewModel.featureTaskList.map({ $0.task })
+                    viewModel.getFeatureTask(taskType: .feature, projectName: selectedProject)
                 }
                 
                 
@@ -184,8 +182,7 @@ struct PopoverTaskView: View {
                 .onTapGesture {
                     self.selectedTask = .bug
                     self.hoveredItem = .bug
-                    bugItemList = viewModel.bugTaskList
-                    showingList = bugItemList.map({ $0.task })
+                    viewModel.getBugTask(taskType: .bug, projectName: selectedProject)
                 }
                 
                 ZStack {
@@ -214,7 +211,7 @@ struct PopoverTaskView: View {
                 .onTapGesture {
                     self.selectedTask = .daily
                     self.hoveredItem = .daily
-                    showingList = viewModel.dailyTaskList.map({ $0.task })
+                    viewModel.getDailyTask(taskType: .daily)
                 }
             }
         }
@@ -265,7 +262,7 @@ struct PopoverTaskView: View {
         .padding(8)
         
         
-        showingList.isEmpty ?
+        viewModel.showingList.isEmpty ?
         AnyView(
             HStack(spacing: 5) {
                 Text(StringConstant.notAddedTaskText)
@@ -280,7 +277,7 @@ struct PopoverTaskView: View {
         
         : AnyView(
             List {
-                ForEach(showingList, id: \.self) { item in
+                ForEach(viewModel.showingList, id: \.self) { item in
                     HStack {
                         Toggle("", isOn: $isCompleted)
                             .toggleStyle(.automatic)
