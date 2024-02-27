@@ -3,11 +3,7 @@ import FirebaseFirestore
 import FirebaseAuth
 
 protocol PopoverViewModelProtocol {
-//    func getFeatureTask(projectName: String)
-//    func getBugTask()
-//    func getDailyTask()
     func getTask<T: Codable>(taskType: TaskType, projectName: String, completion: @escaping (Result<T, Error>?) -> Void)
-    
 }
 
 final class PopoverViewModel: ObservableObject {
@@ -43,13 +39,11 @@ final class PopoverViewModel: ObservableObject {
     
     func getFeatureTask(taskType: TaskType, projectName: String) {
         
-//        self.featureTaskList.removeAll(keepingCapacity: false)
-        
+        self.showingList.removeAll(keepingCapacity: false)
         GetTask.shared.getFeatureTask(taskType: taskType, projectName: projectName) { result in
-            self.showingList.removeAll(keepingCapacity: false)
+            
             switch result {
             case .success(let success):
-//                self.featureTaskList.append(success)
                 self.showingList.append(success.task)
             case .failure(let failure):
                 self.errorMessage = failure.localizedDescription
@@ -59,13 +53,15 @@ final class PopoverViewModel: ObservableObject {
     
     func getBugTask(taskType: TaskType, projectName: String) {
         
-        self.bugTaskList.removeAll(keepingCapacity: false)
         
+        
+        self.bugTaskList.removeAll(keepingCapacity: false)
         GetTask.shared.getBugTask(taskType: taskType, projectName: projectName) { result in
-            self.showingList.removeAll(keepingCapacity: false)
+            
             switch result {
             case .success(let success):
                 self.bugTaskList.append(success)
+                
                 self.showingList = self.bugTaskList.map({ $0.task })
             case .failure(let failure):
                 self.errorMessage = failure.localizedDescription
@@ -89,29 +85,18 @@ final class PopoverViewModel: ObservableObject {
         }
     }
     
-    func saveTask(_ taskItem: TaskType, _ taskText: String) {
+    func saveTask(_ taskItem: TaskType, _ projectName: String, _ taskText: String) {
         
-        guard let userID else { return }
-        switch taskItem {
-        case .feature: 
-            let taskReference = database.collection("user").document(userID).collection("FeatureTask")
-            let taskID = UUID()
-            let newTask = [
-                "id": "\(userID)",
-                "task": taskText
-            ]
-            taskReference.addDocument(data: newTask) { error in
-                if let error = error {
-                    print("Görev eklenirken hata oluştu: \(error)")
-                } else {
-                    print("Yeni görev başarıyla eklendi.")
-                }
-            }
-        case .bug:
-            print("Bug taskına kaydet")
-        case .daily:
-            print("Daily taskına kaydet")
-        }
+        saveAndUpdateTask(taskItem, projectName, taskText)
+        
+//        switch taskItem {
+//        case .feature: 
+//            saveAndUpdateTask(taskItem, projectName, taskText)
+//        case .bug:
+//            saveAndUpdateTask(taskItem, projectName, taskText)
+//        case .daily:
+//            saveAndUpdateTask(taskItem, projectName, taskText)
+//        }
         
     }
     
@@ -140,6 +125,32 @@ final class PopoverViewModel: ObservableObject {
     
     func getLastSelectedProject() {
         
+    }
+    
+    private func saveAndUpdateTask(_ taskItem: TaskType, _ projectName: String, _ taskText: String) {
+        
+        guard let userID else { return }
+        let taskReference = database.collection("users").document(userID).collection("Project").document(projectName).collection(taskItem.rawValue)
+        let taskID = UUID()
+        let newTask = [
+            "id": "\(userID)",
+            "task": taskText
+        ]
+        taskReference.addDocument(data: newTask) { error in
+            if let error = error {
+                print("Görev eklenirken hata oluştu: \(error)")
+            } else {
+                print("Yeni görev başarıyla eklendi.")
+                switch taskItem {
+                case .feature:
+                    self.getFeatureTask(taskType: .feature, projectName: projectName)
+                case .bug:
+                    self.getBugTask(taskType: .bug, projectName: projectName)
+                case .daily:
+                    print("Daily")
+                }
+            }
+        }
     }
 }
 

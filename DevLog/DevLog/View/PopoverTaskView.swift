@@ -243,8 +243,8 @@ struct PopoverTaskView: View {
                 Image(systemName: "plus")
                     .padding(.trailing, 8)
                     .onTapGesture {
-                        // Item added
-                        projects.count > 0 ? viewModel.saveTask(selectedTask, addNewTaskText) : nil
+                        print("CLİCKED : \(selectedProject) to -> \(addNewTaskText)")
+                        viewModel.allProjectList.count > 0 ? viewModel.saveTask(selectedTask, selectedProject, addNewTaskText) : nil
                         addNewTaskText = ""
                     }
                 

@@ -38,7 +38,7 @@ final class FirebaseManager: FirebaseManagerProtocol {
         
         guard let id = Auth.auth().currentUser?.uid else { return }
         
-        database.collection("users").document(id).collection("Project").document(projectName).collection(taskType.rawValue).addSnapshotListener { snapshot, error in
+        database.collection("users").document(id).collection("Project").document(projectName).collection(taskType.rawValue).getDocuments { snapshot, error in
             
             guard error == nil else {
                 completion(.failure(error!))
