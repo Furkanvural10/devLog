@@ -233,21 +233,32 @@ struct PopoverTaskView: View {
             
             
             ZStack {
-                Rectangle()
-                    .frame(width: 30, height: 30)
-                    .foregroundStyle(plusHoveredItem ? .white.opacity(0.1) : .clear)
-                    .clipShape(RoundedRectangle(cornerRadius: 5))
+                Button {
+                    print("CLİCKED : \(selectedProject) to -> \(addNewTaskText)")
+                    guard addNewTaskText.count > 1 else { return }
+                    viewModel.allProjectList.count > 0 ? viewModel.saveTask(selectedTask, selectedProject, addNewTaskText) : nil
+                    addNewTaskText = ""
+                } label: {
+                    Image(systemName: "plus")
+
+                }
                     .padding(.trailing, 8)
-                
-                
-                Image(systemName: "plus")
-                    .padding(.trailing, 8)
-                    .onTapGesture {
-                        print("CLİCKED : \(selectedProject) to -> \(addNewTaskText)")
-                        viewModel.allProjectList.count > 0 ? viewModel.saveTask(selectedTask, selectedProject, addNewTaskText) : nil
-                        addNewTaskText = ""
-                    }
-                
+
+//                Rectangle()
+//                    .frame(width: 30, height: 30)
+//                    .foregroundStyle(plusHoveredItem ? .white.opacity(0.1) : .clear)
+//                    .clipShape(RoundedRectangle(cornerRadius: 5))
+//                    .padding(.trailing, 8)
+//                
+//                
+//                Image(systemName: "plus")
+//                    .padding(.trailing, 8)
+//                    .onTapGesture {
+//                        print("CLİCKED : \(selectedProject) to -> \(addNewTaskText)")
+//                        guard addNewTaskText.count > 1 else { return }
+//                        viewModel.allProjectList.count > 0 ? viewModel.saveTask(selectedTask, selectedProject, addNewTaskText) : nil
+//                        addNewTaskText = ""
+//                    }
             }
             .onHover { hovering in
                 switch hovering {
@@ -256,7 +267,6 @@ struct PopoverTaskView: View {
                 case false:
                     plusHoveredItem.toggle()
                 }
-
             }
         }
         .padding(8)
@@ -265,7 +275,7 @@ struct PopoverTaskView: View {
         viewModel.showingList.isEmpty ?
         AnyView(
             HStack(spacing: 5) {
-                Text(StringConstant.notAddedTaskText)
+                Text(viewModel.allProjectList.count > 0 ? StringConstant.notAddedTaskText : StringConstant.addNewProject)
                     .foregroundStyle(.white.opacity(0.5))
                     .font(.system(size: 18))
                 

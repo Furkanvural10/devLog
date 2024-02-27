@@ -42,6 +42,7 @@ final class FirebaseManager: FirebaseManagerProtocol {
             
             guard error == nil else {
                 completion(.failure(error!))
+                
                 return
             }
             guard let snapshot = snapshot else {
@@ -55,7 +56,7 @@ final class FirebaseManager: FirebaseManagerProtocol {
                     completion(.success(product))
                 }
                 catch {
-                    print("decode error")
+                    completion(.failure(error))
                     return
                 }
             }
@@ -86,7 +87,7 @@ final class FirebaseManager: FirebaseManagerProtocol {
                     completion(.success(product))
                 }
                 catch {
-                    print("decode error")
+                    print("decode error get data")
                     completion(.failure(.decodeError))
                     return
                 }

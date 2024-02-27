@@ -1,6 +1,8 @@
 import Foundation
 import FirebaseFirestore
 import FirebaseAuth
+import FirebaseDatabase
+
 
 protocol PopoverViewModelProtocol {
     func getTask<T: Codable>(taskType: TaskType, projectName: String, completion: @escaping (Result<T, Error>?) -> Void)
@@ -38,33 +40,39 @@ final class PopoverViewModel: ObservableObject {
     
     
     func getFeatureTask(taskType: TaskType, projectName: String) {
-        
-        self.showingList.removeAll(keepingCapacity: false)
+
+        self.featureTaskList.removeAll(keepingCapacity: false)
         GetTask.shared.getFeatureTask(taskType: taskType, projectName: projectName) { result in
             
             switch result {
             case .success(let success):
-                self.showingList.append(success.task)
+                self.featureTaskList.append(success)
+                self.showingList = self.featureTaskList.map({ $0.task })
             case .failure(let failure):
                 self.errorMessage = failure.localizedDescription
+                print(self.errorMessage)
+//                if failure.localizedDescription == "The data couldn’t be read because it is missing." {
+//                    self.showingList.removeAll(keepingCapacity: false)
+//                }
             }
         }
     }
     
     func getBugTask(taskType: TaskType, projectName: String) {
-        
-        
-        
+
         self.bugTaskList.removeAll(keepingCapacity: false)
         GetTask.shared.getBugTask(taskType: taskType, projectName: projectName) { result in
             
             switch result {
             case .success(let success):
                 self.bugTaskList.append(success)
-                
                 self.showingList = self.bugTaskList.map({ $0.task })
             case .failure(let failure):
                 self.errorMessage = failure.localizedDescription
+                print(self.errorMessage)
+//                if failure.localizedDescription == "The data couldn’t be read because it is missing." {
+//                    self.showingList.removeAll(keepingCapacity: false)
+//                }
             }
         }
     }
@@ -131,11 +139,15 @@ final class PopoverViewModel: ObservableObject {
         
         guard let userID else { return }
         let taskReference = database.collection("users").document(userID).collection("Project").document(projectName).collection(taskItem.rawValue)
+        
         let taskID = UUID()
-        let newTask = [
-            "id": "\(userID)",
+        
+        let newTask: [String: Any] = [
+            "id": "\(taskID)",
             "task": taskText
+//            "time": FieldValue.serverTimestamp()
         ]
+        
         taskReference.addDocument(data: newTask) { error in
             if let error = error {
                 print("Görev eklenirken hata oluştu: \(error)")

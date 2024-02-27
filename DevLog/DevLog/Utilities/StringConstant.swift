@@ -14,4 +14,5 @@ final class StringConstant {
     static let addNewProjectText = "Add New Project"
     static let deleteButtonText = "Delete"
     static let notAddedTaskText = "Not yet add task"
+    static let addNewProject = "Add New Project"
 }
