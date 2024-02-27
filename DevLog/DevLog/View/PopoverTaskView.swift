@@ -11,7 +11,7 @@ enum TaskType: String {
 
 struct PopoverTaskView: View {
     
-    @State private var lastProject: String = UserDefaults.standard.string(forKey: "lastSelectedProject") ?? ""
+    @State private var lastProject: String = UserDefaults.standard.string(forKey: "lastSelectedProject") ?? "Welcome"
 
     @State var isSelected = false
     @State private var isCompleted = false
@@ -59,6 +59,7 @@ struct PopoverTaskView: View {
                         selectedProject = lastProject
                         viewModel.getAllProject()
                         
+
                         // TODO: - ViewModel
                         viewModel.allProjectList.count > 0 ? isProjectExist.toggle() : nil
                         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
@@ -92,7 +93,7 @@ struct PopoverTaskView: View {
                     }
                 )
                 : AnyView (
-                    Menu(StringConstant.selectProjectText) {
+                    Menu(viewModel.allProjectList.count > 0 ? StringConstant.selectProjectText: StringConstant.addNewProjectText) {
                         ForEach(viewModel.allProjectList, id: \.self) { project in
                             Button(project) {
                                 self.selectedProject = project
@@ -136,7 +137,7 @@ struct PopoverTaskView: View {
                     HStack {
                         
                         Image(systemName: "circle.fill")
-                            .foregroundStyle(.green)
+                            .foregroundStyle(viewModel.allProjectList.count > 0 ? .green : .gray)
                         Text("Features")
                             .foregroundStyle(selectedTask == .feature ? .white : .white.opacity(0.5))
                     }
@@ -166,7 +167,7 @@ struct PopoverTaskView: View {
                     HStack {
                         
                         Image(systemName: "circle.fill")
-                            .foregroundStyle(.red)
+                            .foregroundStyle(viewModel.allProjectList.count > 0 ? .red : .gray)
                         Text("Bugs")
                             .foregroundStyle(selectedTask == .bug ? .white : .white.opacity(0.5))
                     }
@@ -193,7 +194,7 @@ struct PopoverTaskView: View {
                         .cornerRadius(10)
                     HStack {
                         Image(systemName: "circle.fill")
-                            .foregroundStyle(.orange)
+                            .foregroundStyle(viewModel.allProjectList.count > 0 ? .orange: .gray)
                         Text("Daily")
                             .foregroundStyle(selectedTask == .daily ? .white : .white.opacity(0.5))
                         
@@ -218,9 +219,10 @@ struct PopoverTaskView: View {
         
         
         HStack {
-            TextField(StringConstant.newTaskText, text: $addNewTaskText) { text in
+            TextField(viewModel.allProjectList.count > 0 ? StringConstant.newTaskText : "", text: $addNewTaskText) { text in
                 
             }
+            .disabled(viewModel.allProjectList.count > 0 ? false : true)
             .focused($focused)
             .clipShape(RoundedRectangle(cornerRadius: 8))
             .padding(.horizontal, 10)
@@ -276,11 +278,11 @@ struct PopoverTaskView: View {
         AnyView(
             HStack(spacing: 5) {
                 Text(viewModel.allProjectList.count > 0 ? StringConstant.notAddedTaskText : StringConstant.addNewProject)
-                    .foregroundStyle(.white.opacity(0.5))
+                    .foregroundStyle(viewModel.allProjectList.count > 0 ? .white.opacity(0.5): .red)
                     .font(.system(size: 18))
                 
                 Image(systemName: "exclamationmark.circle")
-                    .foregroundStyle(.white.opacity(0.5))
+                    .foregroundStyle(viewModel.allProjectList.count > 0 ? .white.opacity(0.5) : .red)
                     .font(.system(size: 15))
             }.padding(.vertical, 119.5)
         )
