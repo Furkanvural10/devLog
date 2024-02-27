@@ -144,17 +144,29 @@ struct PopoverTaskView: View {
                 }
                 
                 .onHover(perform: { hovering in
-                    switch hovering {
+                    switch viewModel.allProjectList.count > 0 {
                     case true:
-                        self.hoveredItem = .feature
+                        switch hovering {
+                        case true:
+                            self.hoveredItem = .feature
+                        case false:
+                            self.hoveredItem = selectedTask
+                        }
                     case false:
-                        self.hoveredItem = selectedTask
+                        return
                     }
+                    
                 })
                 .onTapGesture {
-                    self.selectedTask = .feature
-                    self.hoveredItem = .feature
-                    viewModel.getFeatureTask(taskType: .feature, projectName: selectedProject)
+                    switch viewModel.allProjectList.count > 0 {
+                    case true:
+                        self.selectedTask = .feature
+                        self.hoveredItem = .feature
+                        viewModel.getFeatureTask(taskType: .feature, projectName: selectedProject)
+                    case false:
+                        return
+                    }
+                    
                 }
                 
                 
