@@ -54,14 +54,11 @@ struct PopoverTaskView: View {
                     .onAppear {
                         selectedProject = lastProject
                         viewModel.getAllProject()
-                        
 
                         // TODO: - ViewModel
                         viewModel.allProjectList.count > 0 ? isProjectExist.toggle() : nil
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                            shortString.toggle()
-                            
-                        }
+//                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {}
+                        shortString.toggle()
                         viewModel.getFeatureTask(taskType: .feature, projectName: selectedProject)
                     }
                 Spacer()

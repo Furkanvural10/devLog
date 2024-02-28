@@ -5,6 +5,7 @@
 //  Created by furkan vural on 13.01.2024.
 //
 
+import Cocoa
 import Foundation
 import SwiftUI
 import Firebase
@@ -25,7 +26,27 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         setupMenuBar()
         setupPopover()
         createUser()
+        
+        let accessEnabled = AXIsProcessTrustedWithOptions(
+                    [kAXTrustedCheckOptionPrompt.takeUnretainedValue() as String: true] as CFDictionary)
+        
+        if accessEnabled {
+            NSEvent.addGlobalMonitorForEvents(matching: [.keyDown]) { event in
+                // Command + Option + P tuş kombinasyonunu kontrol et
+                if event.modifierFlags.contains([.shift, .command]) && event.keyCode == 26 {
+                    self.menuButtonClicked()
+                }
+            }
+        }
+        
+        
     }
+    
+    //    @objc func menuButtonClicked() {
+    //            if popover.isShown {
+    //                popover.performClose(nil)
+    //            }
+    //        }
 }
 
 // MARK: - Menu Bar
@@ -58,7 +79,7 @@ extension AppDelegate {
             
         }
     }
-        
+    
     
     func setupMenuBar() {
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength) // 64
@@ -85,17 +106,22 @@ extension AppDelegate {
         if popover.isShown {
             popover.performClose(nil)
             return
+        } else {
+            //            guard let menuButton = statusItem.button else { return }
+            //            popover.show(relativeTo: menuButton.bounds, of: menuButton, preferredEdge: .maxY)
+            
+            guard let menuButton = statusItem.button else { return }
+            let positionView = NSView(frame: menuButton.bounds)
+            positionView.identifier = NSUserInterfaceItemIdentifier(rawValue: "positionView")
+            menuButton.addSubview(positionView)
+            
+            popover.show(relativeTo: menuButton.bounds, of: menuButton, preferredEdge: .maxY)
+            menuButton.bounds = menuButton.bounds.offsetBy(dx: 0, dy: menuButton.bounds.height)
+            popover.contentViewController?.view.window?.makeKey()
         }
         
         // MARK: - Showing Popover view
-        guard let menuButton = statusItem.button else { return }
-        let positionView = NSView(frame: menuButton.bounds)
-        positionView.identifier = NSUserInterfaceItemIdentifier(rawValue: "positionView")
-        menuButton.addSubview(positionView)
         
-        popover.show(relativeTo: menuButton.bounds, of: menuButton, preferredEdge: .maxY)
-        menuButton.bounds = menuButton.bounds.offsetBy(dx: 0, dy: menuButton.bounds.height)
-        popover.contentViewController?.view.window?.makeKey()
         
         
     }
