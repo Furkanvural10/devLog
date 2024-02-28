@@ -28,7 +28,7 @@ struct PopoverTaskView: View {
     @State var projects: [String] = []
     
     @State var showingList: [String] = []
-    @State private var hoveredItem: TaskType = .feature
+    @State private var hoveredItem: TaskType!
     @State private var plusHoveredItem: Bool = false
     @State private var isProjectExist: Bool = false
     @State var title: String = ""
@@ -36,8 +36,7 @@ struct PopoverTaskView: View {
     @State var menuTitle1: String = StringConstant.menuTitle1Text
     @State var menuTitle2: String = StringConstant.menuTitle2Text
     @State var taskTextFieldPlaceholder: String = StringConstant.taskTextFieldPlaceholderText
-    
-    
+
     @StateObject var viewModel = PopoverViewModel()
     
     @FocusState private var focused: Bool
@@ -45,10 +44,7 @@ struct PopoverTaskView: View {
     
     @State var shortString = true
     
-    
     var body: some View {
-        
-        
         VStack(spacing: 5) {
             HStack {
                 Text(shortString ? StringConstant.welcomeText : selectedProject)
@@ -123,23 +119,21 @@ struct PopoverTaskView: View {
                         .padding()
                         .cornerRadius(5)
                         .opacity(!shortString ? 0.9 : 0)
-                    
                 )
             }
             
             HStack(spacing: 10) {
                 ZStack {
                     Rectangle()
-                        .fill(selectedTask == .feature ? .white.opacity(0.1) : Color.clear)
+                        .fill(selectedTask == .feature && viewModel.allProjectList.count > 1 ? .white.opacity(0.1) : Color.clear)
                         .background(hoveredItem == .feature ? .white.opacity(0.05): Color.clear)
                         .frame(width: 100, height: 35)
                         .cornerRadius(10)
                     HStack {
-                        
                         Image(systemName: "circle.fill")
                             .foregroundStyle(viewModel.allProjectList.count > 0 ? .green : .gray)
                         Text("Features")
-                            .foregroundStyle(selectedTask == .feature ? .white : .white.opacity(0.5))
+                            .foregroundStyle(selectedTask == .feature && viewModel.allProjectList.count > 0 ? .white : .white.opacity(0.5))
                     }
                 }
                 
@@ -185,17 +179,33 @@ struct PopoverTaskView: View {
                     }
                 }
                 .onHover(perform: { hovering in
-                    switch hovering {
+                    
+                    switch viewModel.allProjectList.count > 0 {
                     case true:
-                        hoveredItem = .bug
+                        switch hovering {
+                        case true:
+                            hoveredItem = .bug
+                        case false:
+                            hoveredItem = selectedTask
+                        }
                     case false:
-                        hoveredItem = selectedTask
+                        return
                     }
+                    
+                    
                 })
                 .onTapGesture {
-                    self.selectedTask = .bug
-                    self.hoveredItem = .bug
-                    viewModel.getBugTask(taskType: .bug, projectName: selectedProject)
+                    
+                    switch viewModel.allProjectList.count > 0 {
+                    case true:
+                        self.selectedTask = .bug
+                        self.hoveredItem = .bug
+                        viewModel.getBugTask(taskType: .bug, projectName: selectedProject)
+                    case false:
+                        return
+                    }
+                    
+                    
                 }
                 
                 ZStack {
@@ -214,17 +224,30 @@ struct PopoverTaskView: View {
                 }
                 .keyboardShortcut("B", modifiers: [.command, .shift, .control])
                 .onHover(perform: { hovering in
-                    switch hovering {
+                    
+                    switch viewModel.allProjectList.count > 0 {
                     case true:
-                        hoveredItem = .daily
+                        switch hovering {
+                        case true:
+                            hoveredItem = .daily
+                        case false:
+                            hoveredItem = selectedTask
+                        }
                     case false:
-                        hoveredItem = selectedTask
+                        return
                     }
+                    
+                    
                 })
                 .onTapGesture {
-                    self.selectedTask = .daily
-                    self.hoveredItem = .daily
-                    viewModel.getDailyTask(taskType: .daily)
+                    switch viewModel.allProjectList.count > 0 {
+                    case true:
+                        self.selectedTask = .daily
+                        self.hoveredItem = .daily
+                        viewModel.getDailyTask(taskType: .daily)
+                    case false:
+                        return
+                    }
                 }
             }
         }
@@ -256,6 +279,7 @@ struct PopoverTaskView: View {
                     Image(systemName: "plus")
 
                 }
+                .disabled(viewModel.allProjectList.count > 0 ? false : true)
                     .padding(.trailing, 8)
 
 //                Rectangle()
