@@ -12,7 +12,7 @@ enum TaskType: String {
 struct PopoverTaskView: View {
     
     @State private var lastProject: String = UserDefaults.standard.string(forKey: "lastSelectedProject") ?? "Welcome"
-
+    
     @State var isSelected = false
     @State private var isCompleted = false
     @State private var isRequestNewProject = false
@@ -36,7 +36,7 @@ struct PopoverTaskView: View {
     @State var menuTitle1: String = StringConstant.menuTitle1Text
     @State var menuTitle2: String = StringConstant.menuTitle2Text
     @State var taskTextFieldPlaceholder: String = StringConstant.taskTextFieldPlaceholderText
-
+    
     @StateObject var viewModel = PopoverViewModel()
     
     @FocusState private var focused: Bool
@@ -47,20 +47,20 @@ struct PopoverTaskView: View {
     var body: some View {
         VStack(spacing: 5) {
             HStack {
-                Text(shortString ? StringConstant.welcomeText : selectedProject)
-                    .animation(.easeInOut(duration: 0.6))
-                    .font(.title2)
-                    .padding()
-                    .onAppear {
-                        selectedProject = lastProject
-                        viewModel.getAllProject()
-
-                        // TODO: - ViewModel
-                        viewModel.allProjectList.count > 0 ? isProjectExist.toggle() : nil
-//                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {}
-                        shortString.toggle()
-                        viewModel.getFeatureTask(taskType: .feature, projectName: selectedProject)
-                    }
+                    Text(shortString ? StringConstant.welcomeText : selectedProject)
+                        .animation(.easeInOut(duration: 0.6))
+                        .font(.title2)
+                        .padding()
+                        .onAppear {
+                            selectedProject = lastProject
+                            viewModel.getAllProject()
+                            
+                            // TODO: - ViewModel
+                            viewModel.allProjectList.count > 0 ? isProjectExist.toggle() : nil
+                            //                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {}
+                            shortString.toggle()
+                            viewModel.getFeatureTask(taskType: .feature, projectName: selectedProject)
+                        }
                 Spacer()
                 isRequestNewProject ? AnyView(
                     HStack {
@@ -100,7 +100,7 @@ struct PopoverTaskView: View {
                                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                                     self.showingList = viewModel.featureTaskList.map({ $0.task })
                                 }
-
+                                
                             }
                             .keyboardShortcut(.init(project.first!))
                             
@@ -274,26 +274,26 @@ struct PopoverTaskView: View {
                     addNewTaskText = ""
                 } label: {
                     Image(systemName: "plus")
-
+                    
                 }
                 .disabled(viewModel.allProjectList.count > 0 ? false : true)
-                    .padding(.trailing, 8)
-
-//                Rectangle()
-//                    .frame(width: 30, height: 30)
-//                    .foregroundStyle(plusHoveredItem ? .white.opacity(0.1) : .clear)
-//                    .clipShape(RoundedRectangle(cornerRadius: 5))
-//                    .padding(.trailing, 8)
-//                
-//                
-//                Image(systemName: "plus")
-//                    .padding(.trailing, 8)
-//                    .onTapGesture {
-//                        print("CLİCKED : \(selectedProject) to -> \(addNewTaskText)")
-//                        guard addNewTaskText.count > 1 else { return }
-//                        viewModel.allProjectList.count > 0 ? viewModel.saveTask(selectedTask, selectedProject, addNewTaskText) : nil
-//                        addNewTaskText = ""
-//                    }
+                .padding(.trailing, 8)
+                
+                //                Rectangle()
+                //                    .frame(width: 30, height: 30)
+                //                    .foregroundStyle(plusHoveredItem ? .white.opacity(0.1) : .clear)
+                //                    .clipShape(RoundedRectangle(cornerRadius: 5))
+                //                    .padding(.trailing, 8)
+                //
+                //
+                //                Image(systemName: "plus")
+                //                    .padding(.trailing, 8)
+                //                    .onTapGesture {
+                //                        print("CLİCKED : \(selectedProject) to -> \(addNewTaskText)")
+                //                        guard addNewTaskText.count > 1 else { return }
+                //                        viewModel.allProjectList.count > 0 ? viewModel.saveTask(selectedTask, selectedProject, addNewTaskText) : nil
+                //                        addNewTaskText = ""
+                //                    }
             }
             .onHover { hovering in
                 switch hovering {
