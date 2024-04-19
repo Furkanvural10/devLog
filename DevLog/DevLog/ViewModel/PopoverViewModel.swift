@@ -49,7 +49,7 @@ final class PopoverViewModel: ObservableObject {
                 self.featureTaskList.append(success)
                 self.showingList = self.featureTaskList.map({ $0.task })
             case .failure(let failure):
-                self.errorMessage = failure.localizedDescription
+                self.errorMessage = "\(failure)"
                 print(self.errorMessage)
 //                if failure.localizedDescription == "The data couldn’t be read because it is missing." {
 //                    self.showingList.removeAll(keepingCapacity: false)
@@ -167,6 +167,7 @@ final class PopoverViewModel: ObservableObject {
 }
 
 extension PopoverViewModel: PopoverViewModelProtocol {
+    
     func getTask<T>(taskType: TaskType, projectName: String, completion: @escaping (Result<T, Error>?) -> Void) where T : Decodable, T : Encodable {
         
     }

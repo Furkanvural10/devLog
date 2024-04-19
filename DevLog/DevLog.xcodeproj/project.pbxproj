@@ -159,13 +159,6 @@
 			path = View;
 			sourceTree = "<group>";
 		};
-		045F98B12B62FBAB0072C0FE /* Constants */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Constants;
-			sourceTree = "<group>";
-		};
 		045F98D72B644B0C0072C0FE /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -200,7 +193,6 @@
 				045911CE2B7E9BB8006A2FD7 /* Utilities */,
 				045F98D72B644B0C0072C0FE /* Model */,
 				046699812B4ECA070053C1BD /* DevLog.entitlements */,
-				045F98B12B62FBAB0072C0FE /* Constants */,
 				045F98B02B62FB9E0072C0FE /* View */,
 				045F98AF2B62FB920072C0FE /* ViewModel */,
 				045F988A2B614D920072C0FE /* Support */,

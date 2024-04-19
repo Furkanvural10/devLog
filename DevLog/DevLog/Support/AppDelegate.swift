@@ -32,8 +32,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         if accessEnabled {
             NSEvent.addGlobalMonitorForEvents(matching: [.keyDown]) { event in
-                // Command + Option + P tuş kombinasyonunu kontrol et
-                if event.modifierFlags.contains([.shift, .command]) && event.keyCode == 26 {
+                if event.modifierFlags.contains([.shift, .command]) && event.keyCode == 17 {
                     self.menuButtonClicked()
                 }
             }
